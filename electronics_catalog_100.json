@@ -1,0 +1,1502 @@
+[
+  {
+    "product_id": "ELEC001",
+    "category": "Laptop",
+    "product_name": "TechNova Laptop Model 1",
+    "brand": "TechNova",
+    "price_inr": 95247,
+    "specs": {
+      "feature_1": "Ryzen 7",
+      "ram": "8GB",
+      "storage": "256GB"
+    },
+    "rating": 4.3,
+    "reviews_count": 568,
+    "customer_review": "Good overall purchase with strong feature set."
+  },
+  {
+    "product_id": "ELEC002",
+    "category": "Smartphone",
+    "product_name": "NovaMobile Smartphone Model 2",
+    "brand": "NovaMobile",
+    "price_inr": 51769,
+    "specs": {
+      "feature_1": "Tensor G4",
+      "ram": "32GB",
+      "storage": "1TB"
+    },
+    "rating": 4.1,
+    "reviews_count": 548,
+    "customer_review": "Excellent value for money and reliable performance."
+  },
+  {
+    "product_id": "ELEC003",
+    "category": "Headphones",
+    "product_name": "AudioMax Headphones Model 3",
+    "brand": "AudioMax",
+    "price_inr": 47179,
+    "specs": {
+      "feature_1": "Bluetooth 5.3",
+      "ram": "8GB",
+      "storage": "512GB"
+    },
+    "rating": 4.9,
+    "reviews_count": 1594,
+    "customer_review": "Build quality feels premium and durable."
+  },
+  {
+    "product_id": "ELEC004",
+    "category": "Tablet",
+    "product_name": "DigiPad Tablet Model 4",
+    "brand": "DigiPad",
+    "price_inr": 16583,
+    "specs": {
+      "feature_1": "11-inch",
+      "ram": "32GB",
+      "storage": "128GB"
+    },
+    "rating": 4.9,
+    "reviews_count": 2881,
+    "customer_review": "User interface is smooth and easy to use."
+  },
+  {
+    "product_id": "ELEC005",
+    "category": "Smartwatch",
+    "product_name": "FitTrack Smartwatch Model 5",
+    "brand": "FitTrack",
+    "price_inr": 17224,
+    "specs": {
+      "feature_1": "ECG",
+      "ram": "12GB",
+      "storage": "256GB"
+    },
+    "rating": 4.2,
+    "reviews_count": 3235,
+    "customer_review": "Battery life exceeded expectations during daily use."
+  },
+  {
+    "product_id": "ELEC006",
+    "category": "Monitor",
+    "product_name": "VisionView Monitor Model 6",
+    "brand": "VisionView",
+    "price_inr": 7887,
+    "specs": {
+      "feature_1": "165Hz",
+      "ram": "8GB",
+      "storage": "256GB"
+    },
+    "rating": 4.2,
+    "reviews_count": 1384,
+    "customer_review": "Good overall purchase with strong feature set."
+  },
+  {
+    "product_id": "ELEC007",
+    "category": "SSD",
+    "product_name": "FlashCore SSD Model 7",
+    "brand": "FlashCore",
+    "price_inr": 32574,
+    "specs": {
+      "feature_1": "7000MB/s",
+      "ram": "16GB",
+      "storage": "1TB"
+    },
+    "rating": 4.6,
+    "reviews_count": 3328,
+    "customer_review": "Great performance for productivity and entertainment."
+  },
+  {
+    "product_id": "ELEC008",
+    "category": "Router",
+    "product_name": "NetWave Router Model 8",
+    "brand": "NetWave",
+    "price_inr": 101659,
+    "specs": {
+      "feature_1": "Mesh",
+      "ram": "16GB",
+      "storage": "128GB"
+    },
+    "rating": 4.4,
+    "reviews_count": 3222,
+    "customer_review": "Great performance for productivity and entertainment."
+  },
+  {
+    "product_id": "ELEC009",
+    "category": "Laptop",
+    "product_name": "TechNova Laptop Model 9",
+    "brand": "TechNova",
+    "price_inr": 39780,
+    "specs": {
+      "feature_1": "Intel i5",
+      "ram": "12GB",
+      "storage": "256GB"
+    },
+    "rating": 4.8,
+    "reviews_count": 809,
+    "customer_review": "Excellent value for money and reliable performance."
+  },
+  {
+    "product_id": "ELEC010",
+    "category": "Smartphone",
+    "product_name": "NovaMobile Smartphone Model 10",
+    "brand": "NovaMobile",
+    "price_inr": 109512,
+    "specs": {
+      "feature_1": "Tensor G4",
+      "ram": "32GB",
+      "storage": "128GB"
+    },
+    "rating": 4.3,
+    "reviews_count": 3768,
+    "customer_review": "Great performance for productivity and entertainment."
+  },
+  {
+    "product_id": "ELEC011",
+    "category": "Headphones",
+    "product_name": "AudioMax Headphones Model 11",
+    "brand": "AudioMax",
+    "price_inr": 87306,
+    "specs": {
+      "feature_1": "Hi-Res Audio",
+      "ram": "16GB",
+      "storage": "1TB"
+    },
+    "rating": 4.3,
+    "reviews_count": 4324,
+    "customer_review": "Battery life exceeded expectations during daily use."
+  },
+  {
+    "product_id": "ELEC012",
+    "category": "Tablet",
+    "product_name": "DigiPad Tablet Model 12",
+    "brand": "DigiPad",
+    "price_inr": 45713,
+    "specs": {
+      "feature_1": "13-inch OLED",
+      "ram": "32GB",
+      "storage": "1TB"
+    },
+    "rating": 4.0,
+    "reviews_count": 1745,
+    "customer_review": "Excellent value for money and reliable performance."
+  },
+  {
+    "product_id": "ELEC013",
+    "category": "Smartwatch",
+    "product_name": "FitTrack Smartwatch Model 13",
+    "brand": "FitTrack",
+    "price_inr": 41985,
+    "specs": {
+      "feature_1": "GPS",
+      "ram": "8GB",
+      "storage": "128GB"
+    },
+    "rating": 4.7,
+    "reviews_count": 525,
+    "customer_review": "Great performance for productivity and entertainment."
+  },
+  {
+    "product_id": "ELEC014",
+    "category": "Monitor",
+    "product_name": "VisionView Monitor Model 14",
+    "brand": "VisionView",
+    "price_inr": 79569,
+    "specs": {
+      "feature_1": "4K IPS",
+      "ram": "8GB",
+      "storage": "128GB"
+    },
+    "rating": 4.4,
+    "reviews_count": 994,
+    "customer_review": "User interface is smooth and easy to use."
+  },
+  {
+    "product_id": "ELEC015",
+    "category": "SSD",
+    "product_name": "FlashCore SSD Model 15",
+    "brand": "FlashCore",
+    "price_inr": 117315,
+    "specs": {
+      "feature_1": "NVMe",
+      "ram": "12GB",
+      "storage": "256GB"
+    },
+    "rating": 4.3,
+    "reviews_count": 4222,
+    "customer_review": "Excellent value for money and reliable performance."
+  },
+  {
+    "product_id": "ELEC016",
+    "category": "Router",
+    "product_name": "NetWave Router Model 16",
+    "brand": "NetWave",
+    "price_inr": 15077,
+    "specs": {
+      "feature_1": "Wi\u2011Fi 6",
+      "ram": "12GB",
+      "storage": "1TB"
+    },
+    "rating": 4.1,
+    "reviews_count": 3889,
+    "customer_review": "Great performance for productivity and entertainment."
+  },
+  {
+    "product_id": "ELEC017",
+    "category": "Laptop",
+    "product_name": "TechNova Laptop Model 17",
+    "brand": "TechNova",
+    "price_inr": 6046,
+    "specs": {
+      "feature_1": "Intel i5",
+      "ram": "8GB",
+      "storage": "256GB"
+    },
+    "rating": 4.9,
+    "reviews_count": 2161,
+    "customer_review": "Good overall purchase with strong feature set."
+  },
+  {
+    "product_id": "ELEC018",
+    "category": "Smartphone",
+    "product_name": "NovaMobile Smartphone Model 18",
+    "brand": "NovaMobile",
+    "price_inr": 90486,
+    "specs": {
+      "feature_1": "Snapdragon 8",
+      "ram": "8GB",
+      "storage": "256GB"
+    },
+    "rating": 4.0,
+    "reviews_count": 2077,
+    "customer_review": "Good overall purchase with strong feature set."
+  },
+  {
+    "product_id": "ELEC019",
+    "category": "Headphones",
+    "product_name": "AudioMax Headphones Model 19",
+    "brand": "AudioMax",
+    "price_inr": 117382,
+    "specs": {
+      "feature_1": "Bluetooth 5.3",
+      "ram": "8GB",
+      "storage": "128GB"
+    },
+    "rating": 4.6,
+    "reviews_count": 1593,
+    "customer_review": "User interface is smooth and easy to use."
+  },
+  {
+    "product_id": "ELEC020",
+    "category": "Tablet",
+    "product_name": "DigiPad Tablet Model 20",
+    "brand": "DigiPad",
+    "price_inr": 64630,
+    "specs": {
+      "feature_1": "13-inch OLED",
+      "ram": "8GB",
+      "storage": "512GB"
+    },
+    "rating": 4.1,
+    "reviews_count": 3105,
+    "customer_review": "Great performance for productivity and entertainment."
+  },
+  {
+    "product_id": "ELEC021",
+    "category": "Smartwatch",
+    "product_name": "FitTrack Smartwatch Model 21",
+    "brand": "FitTrack",
+    "price_inr": 53715,
+    "specs": {
+      "feature_1": "ECG",
+      "ram": "8GB",
+      "storage": "256GB"
+    },
+    "rating": 4.4,
+    "reviews_count": 2426,
+    "customer_review": "Excellent value for money and reliable performance."
+  },
+  {
+    "product_id": "ELEC022",
+    "category": "Monitor",
+    "product_name": "VisionView Monitor Model 22",
+    "brand": "VisionView",
+    "price_inr": 10591,
+    "specs": {
+      "feature_1": "165Hz",
+      "ram": "16GB",
+      "storage": "1TB"
+    },
+    "rating": 4.8,
+    "reviews_count": 366,
+    "customer_review": "Excellent value for money and reliable performance."
+  },
+  {
+    "product_id": "ELEC023",
+    "category": "SSD",
+    "product_name": "FlashCore SSD Model 23",
+    "brand": "FlashCore",
+    "price_inr": 81805,
+    "specs": {
+      "feature_1": "PCIe Gen4",
+      "ram": "32GB",
+      "storage": "512GB"
+    },
+    "rating": 4.8,
+    "reviews_count": 3631,
+    "customer_review": "User interface is smooth and easy to use."
+  },
+  {
+    "product_id": "ELEC024",
+    "category": "Router",
+    "product_name": "NetWave Router Model 24",
+    "brand": "NetWave",
+    "price_inr": 56403,
+    "specs": {
+      "feature_1": "Wi\u2011Fi 6",
+      "ram": "8GB",
+      "storage": "128GB"
+    },
+    "rating": 4.4,
+    "reviews_count": 415,
+    "customer_review": "Build quality feels premium and durable."
+  },
+  {
+    "product_id": "ELEC025",
+    "category": "Laptop",
+    "product_name": "TechNova Laptop Model 25",
+    "brand": "TechNova",
+    "price_inr": 28464,
+    "specs": {
+      "feature_1": "Ryzen 5",
+      "ram": "12GB",
+      "storage": "128GB"
+    },
+    "rating": 4.4,
+    "reviews_count": 356,
+    "customer_review": "User interface is smooth and easy to use."
+  },
+  {
+    "product_id": "ELEC026",
+    "category": "Smartphone",
+    "product_name": "NovaMobile Smartphone Model 26",
+    "brand": "NovaMobile",
+    "price_inr": 54180,
+    "specs": {
+      "feature_1": "Dimensity 7300",
+      "ram": "32GB",
+      "storage": "128GB"
+    },
+    "rating": 4.8,
+    "reviews_count": 2419,
+    "customer_review": "Great performance for productivity and entertainment."
+  },
+  {
+    "product_id": "ELEC027",
+    "category": "Headphones",
+    "product_name": "AudioMax Headphones Model 27",
+    "brand": "AudioMax",
+    "price_inr": 87891,
+    "specs": {
+      "feature_1": "ANC",
+      "ram": "32GB",
+      "storage": "256GB"
+    },
+    "rating": 4.6,
+    "reviews_count": 958,
+    "customer_review": "Great performance for productivity and entertainment."
+  },
+  {
+    "product_id": "ELEC028",
+    "category": "Tablet",
+    "product_name": "DigiPad Tablet Model 28",
+    "brand": "DigiPad",
+    "price_inr": 30794,
+    "specs": {
+      "feature_1": "11-inch",
+      "ram": "16GB",
+      "storage": "128GB"
+    },
+    "rating": 4.5,
+    "reviews_count": 219,
+    "customer_review": "Battery life exceeded expectations during daily use."
+  },
+  {
+    "product_id": "ELEC029",
+    "category": "Smartwatch",
+    "product_name": "FitTrack Smartwatch Model 29",
+    "brand": "FitTrack",
+    "price_inr": 83383,
+    "specs": {
+      "feature_1": "ECG",
+      "ram": "12GB",
+      "storage": "256GB"
+    },
+    "rating": 4.2,
+    "reviews_count": 1666,
+    "customer_review": "Great performance for productivity and entertainment."
+  },
+  {
+    "product_id": "ELEC030",
+    "category": "Monitor",
+    "product_name": "VisionView Monitor Model 30",
+    "brand": "VisionView",
+    "price_inr": 42858,
+    "specs": {
+      "feature_1": "165Hz",
+      "ram": "16GB",
+      "storage": "256GB"
+    },
+    "rating": 4.3,
+    "reviews_count": 266,
+    "customer_review": "Build quality feels premium and durable."
+  },
+  {
+    "product_id": "ELEC031",
+    "category": "SSD",
+    "product_name": "FlashCore SSD Model 31",
+    "brand": "FlashCore",
+    "price_inr": 83146,
+    "specs": {
+      "feature_1": "PCIe Gen4",
+      "ram": "8GB",
+      "storage": "128GB"
+    },
+    "rating": 4.3,
+    "reviews_count": 1588,
+    "customer_review": "Build quality feels premium and durable."
+  },
+  {
+    "product_id": "ELEC032",
+    "category": "Router",
+    "product_name": "NetWave Router Model 32",
+    "brand": "NetWave",
+    "price_inr": 9762,
+    "specs": {
+      "feature_1": "Wi\u2011Fi 6",
+      "ram": "12GB",
+      "storage": "512GB"
+    },
+    "rating": 4.8,
+    "reviews_count": 1487,
+    "customer_review": "User interface is smooth and easy to use."
+  },
+  {
+    "product_id": "ELEC033",
+    "category": "Laptop",
+    "product_name": "TechNova Laptop Model 33",
+    "brand": "TechNova",
+    "price_inr": 24944,
+    "specs": {
+      "feature_1": "Ryzen 5",
+      "ram": "12GB",
+      "storage": "256GB"
+    },
+    "rating": 4.4,
+    "reviews_count": 4047,
+    "customer_review": "Battery life exceeded expectations during daily use."
+  },
+  {
+    "product_id": "ELEC034",
+    "category": "Smartphone",
+    "product_name": "NovaMobile Smartphone Model 34",
+    "brand": "NovaMobile",
+    "price_inr": 5277,
+    "specs": {
+      "feature_1": "Tensor G4",
+      "ram": "12GB",
+      "storage": "1TB"
+    },
+    "rating": 4.1,
+    "reviews_count": 4552,
+    "customer_review": "User interface is smooth and easy to use."
+  },
+  {
+    "product_id": "ELEC035",
+    "category": "Headphones",
+    "product_name": "AudioMax Headphones Model 35",
+    "brand": "AudioMax",
+    "price_inr": 39367,
+    "specs": {
+      "feature_1": "Hi-Res Audio",
+      "ram": "16GB",
+      "storage": "512GB"
+    },
+    "rating": 4.8,
+    "reviews_count": 3699,
+    "customer_review": "Battery life exceeded expectations during daily use."
+  },
+  {
+    "product_id": "ELEC036",
+    "category": "Tablet",
+    "product_name": "DigiPad Tablet Model 36",
+    "brand": "DigiPad",
+    "price_inr": 76387,
+    "specs": {
+      "feature_1": "13-inch OLED",
+      "ram": "32GB",
+      "storage": "1TB"
+    },
+    "rating": 4.6,
+    "reviews_count": 1971,
+    "customer_review": "Battery life exceeded expectations during daily use."
+  },
+  {
+    "product_id": "ELEC037",
+    "category": "Smartwatch",
+    "product_name": "FitTrack Smartwatch Model 37",
+    "brand": "FitTrack",
+    "price_inr": 36080,
+    "specs": {
+      "feature_1": "ECG",
+      "ram": "32GB",
+      "storage": "1TB"
+    },
+    "rating": 4.3,
+    "reviews_count": 395,
+    "customer_review": "User interface is smooth and easy to use."
+  },
+  {
+    "product_id": "ELEC038",
+    "category": "Monitor",
+    "product_name": "VisionView Monitor Model 38",
+    "brand": "VisionView",
+    "price_inr": 33051,
+    "specs": {
+      "feature_1": "165Hz",
+      "ram": "8GB",
+      "storage": "512GB"
+    },
+    "rating": 4.5,
+    "reviews_count": 1070,
+    "customer_review": "Battery life exceeded expectations during daily use."
+  },
+  {
+    "product_id": "ELEC039",
+    "category": "SSD",
+    "product_name": "FlashCore SSD Model 39",
+    "brand": "FlashCore",
+    "price_inr": 70253,
+    "specs": {
+      "feature_1": "PCIe Gen4",
+      "ram": "12GB",
+      "storage": "128GB"
+    },
+    "rating": 4.9,
+    "reviews_count": 2305,
+    "customer_review": "Battery life exceeded expectations during daily use."
+  },
+  {
+    "product_id": "ELEC040",
+    "category": "Router",
+    "product_name": "NetWave Router Model 40",
+    "brand": "NetWave",
+    "price_inr": 88970,
+    "specs": {
+      "feature_1": "Mesh",
+      "ram": "16GB",
+      "storage": "1TB"
+    },
+    "rating": 4.5,
+    "reviews_count": 3501,
+    "customer_review": "Good overall purchase with strong feature set."
+  },
+  {
+    "product_id": "ELEC041",
+    "category": "Laptop",
+    "product_name": "TechNova Laptop Model 41",
+    "brand": "TechNova",
+    "price_inr": 111198,
+    "specs": {
+      "feature_1": "Ryzen 5",
+      "ram": "32GB",
+      "storage": "256GB"
+    },
+    "rating": 4.5,
+    "reviews_count": 797,
+    "customer_review": "Battery life exceeded expectations during daily use."
+  },
+  {
+    "product_id": "ELEC042",
+    "category": "Smartphone",
+    "product_name": "NovaMobile Smartphone Model 42",
+    "brand": "NovaMobile",
+    "price_inr": 30558,
+    "specs": {
+      "feature_1": "Tensor G4",
+      "ram": "12GB",
+      "storage": "256GB"
+    },
+    "rating": 4.2,
+    "reviews_count": 413,
+    "customer_review": "Build quality feels premium and durable."
+  },
+  {
+    "product_id": "ELEC043",
+    "category": "Headphones",
+    "product_name": "AudioMax Headphones Model 43",
+    "brand": "AudioMax",
+    "price_inr": 49903,
+    "specs": {
+      "feature_1": "ANC",
+      "ram": "12GB",
+      "storage": "512GB"
+    },
+    "rating": 4.9,
+    "reviews_count": 4990,
+    "customer_review": "User interface is smooth and easy to use."
+  },
+  {
+    "product_id": "ELEC044",
+    "category": "Tablet",
+    "product_name": "DigiPad Tablet Model 44",
+    "brand": "DigiPad",
+    "price_inr": 64399,
+    "specs": {
+      "feature_1": "13-inch OLED",
+      "ram": "16GB",
+      "storage": "128GB"
+    },
+    "rating": 4.1,
+    "reviews_count": 2524,
+    "customer_review": "User interface is smooth and easy to use."
+  },
+  {
+    "product_id": "ELEC045",
+    "category": "Smartwatch",
+    "product_name": "FitTrack Smartwatch Model 45",
+    "brand": "FitTrack",
+    "price_inr": 11881,
+    "specs": {
+      "feature_1": "GPS",
+      "ram": "32GB",
+      "storage": "128GB"
+    },
+    "rating": 4.6,
+    "reviews_count": 1805,
+    "customer_review": "Great performance for productivity and entertainment."
+  },
+  {
+    "product_id": "ELEC046",
+    "category": "Monitor",
+    "product_name": "VisionView Monitor Model 46",
+    "brand": "VisionView",
+    "price_inr": 20466,
+    "specs": {
+      "feature_1": "165Hz",
+      "ram": "8GB",
+      "storage": "512GB"
+    },
+    "rating": 4.5,
+    "reviews_count": 1604,
+    "customer_review": "User interface is smooth and easy to use."
+  },
+  {
+    "product_id": "ELEC047",
+    "category": "SSD",
+    "product_name": "FlashCore SSD Model 47",
+    "brand": "FlashCore",
+    "price_inr": 79067,
+    "specs": {
+      "feature_1": "PCIe Gen4",
+      "ram": "16GB",
+      "storage": "128GB"
+    },
+    "rating": 4.3,
+    "reviews_count": 3242,
+    "customer_review": "Great performance for productivity and entertainment."
+  },
+  {
+    "product_id": "ELEC048",
+    "category": "Router",
+    "product_name": "NetWave Router Model 48",
+    "brand": "NetWave",
+    "price_inr": 26552,
+    "specs": {
+      "feature_1": "Mesh",
+      "ram": "12GB",
+      "storage": "128GB"
+    },
+    "rating": 4.2,
+    "reviews_count": 2619,
+    "customer_review": "Build quality feels premium and durable."
+  },
+  {
+    "product_id": "ELEC049",
+    "category": "Laptop",
+    "product_name": "TechNova Laptop Model 49",
+    "brand": "TechNova",
+    "price_inr": 110062,
+    "specs": {
+      "feature_1": "Intel i7",
+      "ram": "16GB",
+      "storage": "128GB"
+    },
+    "rating": 4.2,
+    "reviews_count": 3077,
+    "customer_review": "Build quality feels premium and durable."
+  },
+  {
+    "product_id": "ELEC050",
+    "category": "Smartphone",
+    "product_name": "NovaMobile Smartphone Model 50",
+    "brand": "NovaMobile",
+    "price_inr": 49248,
+    "specs": {
+      "feature_1": "Tensor G4",
+      "ram": "32GB",
+      "storage": "1TB"
+    },
+    "rating": 4.5,
+    "reviews_count": 1717,
+    "customer_review": "Battery life exceeded expectations during daily use."
+  },
+  {
+    "product_id": "ELEC051",
+    "category": "Headphones",
+    "product_name": "AudioMax Headphones Model 51",
+    "brand": "AudioMax",
+    "price_inr": 43145,
+    "specs": {
+      "feature_1": "Bluetooth 5.3",
+      "ram": "32GB",
+      "storage": "512GB"
+    },
+    "rating": 4.3,
+    "reviews_count": 2024,
+    "customer_review": "Build quality feels premium and durable."
+  },
+  {
+    "product_id": "ELEC052",
+    "category": "Tablet",
+    "product_name": "DigiPad Tablet Model 52",
+    "brand": "DigiPad",
+    "price_inr": 117867,
+    "specs": {
+      "feature_1": "11-inch",
+      "ram": "12GB",
+      "storage": "512GB"
+    },
+    "rating": 4.6,
+    "reviews_count": 4712,
+    "customer_review": "Good overall purchase with strong feature set."
+  },
+  {
+    "product_id": "ELEC053",
+    "category": "Smartwatch",
+    "product_name": "FitTrack Smartwatch Model 53",
+    "brand": "FitTrack",
+    "price_inr": 103872,
+    "specs": {
+      "feature_1": "AMOLED",
+      "ram": "12GB",
+      "storage": "256GB"
+    },
+    "rating": 4.9,
+    "reviews_count": 873,
+    "customer_review": "Build quality feels premium and durable."
+  },
+  {
+    "product_id": "ELEC054",
+    "category": "Monitor",
+    "product_name": "VisionView Monitor Model 54",
+    "brand": "VisionView",
+    "price_inr": 60321,
+    "specs": {
+      "feature_1": "165Hz",
+      "ram": "12GB",
+      "storage": "512GB"
+    },
+    "rating": 4.7,
+    "reviews_count": 1177,
+    "customer_review": "Build quality feels premium and durable."
+  },
+  {
+    "product_id": "ELEC055",
+    "category": "SSD",
+    "product_name": "FlashCore SSD Model 55",
+    "brand": "FlashCore",
+    "price_inr": 115218,
+    "specs": {
+      "feature_1": "NVMe",
+      "ram": "12GB",
+      "storage": "128GB"
+    },
+    "rating": 4.5,
+    "reviews_count": 3106,
+    "customer_review": "Excellent value for money and reliable performance."
+  },
+  {
+    "product_id": "ELEC056",
+    "category": "Router",
+    "product_name": "NetWave Router Model 56",
+    "brand": "NetWave",
+    "price_inr": 89905,
+    "specs": {
+      "feature_1": "Mesh",
+      "ram": "12GB",
+      "storage": "128GB"
+    },
+    "rating": 4.2,
+    "reviews_count": 452,
+    "customer_review": "Great performance for productivity and entertainment."
+  },
+  {
+    "product_id": "ELEC057",
+    "category": "Laptop",
+    "product_name": "TechNova Laptop Model 57",
+    "brand": "TechNova",
+    "price_inr": 51182,
+    "specs": {
+      "feature_1": "Ryzen 5",
+      "ram": "32GB",
+      "storage": "512GB"
+    },
+    "rating": 4.2,
+    "reviews_count": 3747,
+    "customer_review": "Excellent value for money and reliable performance."
+  },
+  {
+    "product_id": "ELEC058",
+    "category": "Smartphone",
+    "product_name": "NovaMobile Smartphone Model 58",
+    "brand": "NovaMobile",
+    "price_inr": 13081,
+    "specs": {
+      "feature_1": "Snapdragon 8",
+      "ram": "16GB",
+      "storage": "1TB"
+    },
+    "rating": 4.4,
+    "reviews_count": 4279,
+    "customer_review": "Build quality feels premium and durable."
+  },
+  {
+    "product_id": "ELEC059",
+    "category": "Headphones",
+    "product_name": "AudioMax Headphones Model 59",
+    "brand": "AudioMax",
+    "price_inr": 98868,
+    "specs": {
+      "feature_1": "Bluetooth 5.3",
+      "ram": "16GB",
+      "storage": "256GB"
+    },
+    "rating": 4.7,
+    "reviews_count": 4805,
+    "customer_review": "Excellent value for money and reliable performance."
+  },
+  {
+    "product_id": "ELEC060",
+    "category": "Tablet",
+    "product_name": "DigiPad Tablet Model 60",
+    "brand": "DigiPad",
+    "price_inr": 37368,
+    "specs": {
+      "feature_1": "2K Display",
+      "ram": "32GB",
+      "storage": "256GB"
+    },
+    "rating": 4.4,
+    "reviews_count": 1851,
+    "customer_review": "User interface is smooth and easy to use."
+  },
+  {
+    "product_id": "ELEC061",
+    "category": "Smartwatch",
+    "product_name": "FitTrack Smartwatch Model 61",
+    "brand": "FitTrack",
+    "price_inr": 41556,
+    "specs": {
+      "feature_1": "ECG",
+      "ram": "8GB",
+      "storage": "256GB"
+    },
+    "rating": 4.7,
+    "reviews_count": 3924,
+    "customer_review": "Battery life exceeded expectations during daily use."
+  },
+  {
+    "product_id": "ELEC062",
+    "category": "Monitor",
+    "product_name": "VisionView Monitor Model 62",
+    "brand": "VisionView",
+    "price_inr": 20889,
+    "specs": {
+      "feature_1": "QHD",
+      "ram": "16GB",
+      "storage": "256GB"
+    },
+    "rating": 4.3,
+    "reviews_count": 4174,
+    "customer_review": "Good overall purchase with strong feature set."
+  },
+  {
+    "product_id": "ELEC063",
+    "category": "SSD",
+    "product_name": "FlashCore SSD Model 63",
+    "brand": "FlashCore",
+    "price_inr": 33367,
+    "specs": {
+      "feature_1": "PCIe Gen4",
+      "ram": "8GB",
+      "storage": "1TB"
+    },
+    "rating": 4.2,
+    "reviews_count": 4118,
+    "customer_review": "Battery life exceeded expectations during daily use."
+  },
+  {
+    "product_id": "ELEC064",
+    "category": "Router",
+    "product_name": "NetWave Router Model 64",
+    "brand": "NetWave",
+    "price_inr": 60719,
+    "specs": {
+      "feature_1": "Dual Band",
+      "ram": "32GB",
+      "storage": "1TB"
+    },
+    "rating": 4.4,
+    "reviews_count": 4617,
+    "customer_review": "Good overall purchase with strong feature set."
+  },
+  {
+    "product_id": "ELEC065",
+    "category": "Laptop",
+    "product_name": "TechNova Laptop Model 65",
+    "brand": "TechNova",
+    "price_inr": 57957,
+    "specs": {
+      "feature_1": "Ryzen 5",
+      "ram": "8GB",
+      "storage": "1TB"
+    },
+    "rating": 4.9,
+    "reviews_count": 1655,
+    "customer_review": "Build quality feels premium and durable."
+  },
+  {
+    "product_id": "ELEC066",
+    "category": "Smartphone",
+    "product_name": "NovaMobile Smartphone Model 66",
+    "brand": "NovaMobile",
+    "price_inr": 28765,
+    "specs": {
+      "feature_1": "Snapdragon 7",
+      "ram": "12GB",
+      "storage": "128GB"
+    },
+    "rating": 4.8,
+    "reviews_count": 474,
+    "customer_review": "Battery life exceeded expectations during daily use."
+  },
+  {
+    "product_id": "ELEC067",
+    "category": "Headphones",
+    "product_name": "AudioMax Headphones Model 67",
+    "brand": "AudioMax",
+    "price_inr": 67207,
+    "specs": {
+      "feature_1": "Hi-Res Audio",
+      "ram": "8GB",
+      "storage": "512GB"
+    },
+    "rating": 4.6,
+    "reviews_count": 1389,
+    "customer_review": "Excellent value for money and reliable performance."
+  },
+  {
+    "product_id": "ELEC068",
+    "category": "Tablet",
+    "product_name": "DigiPad Tablet Model 68",
+    "brand": "DigiPad",
+    "price_inr": 15860,
+    "specs": {
+      "feature_1": "11-inch",
+      "ram": "32GB",
+      "storage": "1TB"
+    },
+    "rating": 4.8,
+    "reviews_count": 4711,
+    "customer_review": "Battery life exceeded expectations during daily use."
+  },
+  {
+    "product_id": "ELEC069",
+    "category": "Smartwatch",
+    "product_name": "FitTrack Smartwatch Model 69",
+    "brand": "FitTrack",
+    "price_inr": 24187,
+    "specs": {
+      "feature_1": "GPS",
+      "ram": "8GB",
+      "storage": "512GB"
+    },
+    "rating": 4.9,
+    "reviews_count": 3510,
+    "customer_review": "User interface is smooth and easy to use."
+  },
+  {
+    "product_id": "ELEC070",
+    "category": "Monitor",
+    "product_name": "VisionView Monitor Model 70",
+    "brand": "VisionView",
+    "price_inr": 6696,
+    "specs": {
+      "feature_1": "165Hz",
+      "ram": "12GB",
+      "storage": "1TB"
+    },
+    "rating": 4.2,
+    "reviews_count": 1437,
+    "customer_review": "User interface is smooth and easy to use."
+  },
+  {
+    "product_id": "ELEC071",
+    "category": "SSD",
+    "product_name": "FlashCore SSD Model 71",
+    "brand": "FlashCore",
+    "price_inr": 53247,
+    "specs": {
+      "feature_1": "PCIe Gen4",
+      "ram": "16GB",
+      "storage": "1TB"
+    },
+    "rating": 4.8,
+    "reviews_count": 4327,
+    "customer_review": "User interface is smooth and easy to use."
+  },
+  {
+    "product_id": "ELEC072",
+    "category": "Router",
+    "product_name": "NetWave Router Model 72",
+    "brand": "NetWave",
+    "price_inr": 72993,
+    "specs": {
+      "feature_1": "Mesh",
+      "ram": "12GB",
+      "storage": "128GB"
+    },
+    "rating": 4.7,
+    "reviews_count": 1619,
+    "customer_review": "Great performance for productivity and entertainment."
+  },
+  {
+    "product_id": "ELEC073",
+    "category": "Laptop",
+    "product_name": "TechNova Laptop Model 73",
+    "brand": "TechNova",
+    "price_inr": 35811,
+    "specs": {
+      "feature_1": "Intel i5",
+      "ram": "16GB",
+      "storage": "1TB"
+    },
+    "rating": 4.6,
+    "reviews_count": 667,
+    "customer_review": "User interface is smooth and easy to use."
+  },
+  {
+    "product_id": "ELEC074",
+    "category": "Smartphone",
+    "product_name": "NovaMobile Smartphone Model 74",
+    "brand": "NovaMobile",
+    "price_inr": 113096,
+    "specs": {
+      "feature_1": "Dimensity 7300",
+      "ram": "16GB",
+      "storage": "256GB"
+    },
+    "rating": 4.7,
+    "reviews_count": 4878,
+    "customer_review": "Great performance for productivity and entertainment."
+  },
+  {
+    "product_id": "ELEC075",
+    "category": "Headphones",
+    "product_name": "AudioMax Headphones Model 75",
+    "brand": "AudioMax",
+    "price_inr": 108897,
+    "specs": {
+      "feature_1": "Hi-Res Audio",
+      "ram": "12GB",
+      "storage": "256GB"
+    },
+    "rating": 4.6,
+    "reviews_count": 4104,
+    "customer_review": "Good overall purchase with strong feature set."
+  },
+  {
+    "product_id": "ELEC076",
+    "category": "Tablet",
+    "product_name": "DigiPad Tablet Model 76",
+    "brand": "DigiPad",
+    "price_inr": 8636,
+    "specs": {
+      "feature_1": "13-inch OLED",
+      "ram": "8GB",
+      "storage": "512GB"
+    },
+    "rating": 4.9,
+    "reviews_count": 1845,
+    "customer_review": "User interface is smooth and easy to use."
+  },
+  {
+    "product_id": "ELEC077",
+    "category": "Smartwatch",
+    "product_name": "FitTrack Smartwatch Model 77",
+    "brand": "FitTrack",
+    "price_inr": 67131,
+    "specs": {
+      "feature_1": "AMOLED",
+      "ram": "12GB",
+      "storage": "256GB"
+    },
+    "rating": 4.8,
+    "reviews_count": 2181,
+    "customer_review": "Excellent value for money and reliable performance."
+  },
+  {
+    "product_id": "ELEC078",
+    "category": "Monitor",
+    "product_name": "VisionView Monitor Model 78",
+    "brand": "VisionView",
+    "price_inr": 114572,
+    "specs": {
+      "feature_1": "165Hz",
+      "ram": "32GB",
+      "storage": "256GB"
+    },
+    "rating": 4.6,
+    "reviews_count": 3919,
+    "customer_review": "Battery life exceeded expectations during daily use."
+  },
+  {
+    "product_id": "ELEC079",
+    "category": "SSD",
+    "product_name": "FlashCore SSD Model 79",
+    "brand": "FlashCore",
+    "price_inr": 78092,
+    "specs": {
+      "feature_1": "NVMe",
+      "ram": "16GB",
+      "storage": "512GB"
+    },
+    "rating": 4.6,
+    "reviews_count": 3551,
+    "customer_review": "Battery life exceeded expectations during daily use."
+  },
+  {
+    "product_id": "ELEC080",
+    "category": "Router",
+    "product_name": "NetWave Router Model 80",
+    "brand": "NetWave",
+    "price_inr": 71337,
+    "specs": {
+      "feature_1": "Wi\u2011Fi 6",
+      "ram": "16GB",
+      "storage": "512GB"
+    },
+    "rating": 4.0,
+    "reviews_count": 4008,
+    "customer_review": "Battery life exceeded expectations during daily use."
+  },
+  {
+    "product_id": "ELEC081",
+    "category": "Laptop",
+    "product_name": "TechNova Laptop Model 81",
+    "brand": "TechNova",
+    "price_inr": 39861,
+    "specs": {
+      "feature_1": "Ryzen 7",
+      "ram": "8GB",
+      "storage": "1TB"
+    },
+    "rating": 4.1,
+    "reviews_count": 4209,
+    "customer_review": "Excellent value for money and reliable performance."
+  },
+  {
+    "product_id": "ELEC082",
+    "category": "Smartphone",
+    "product_name": "NovaMobile Smartphone Model 82",
+    "brand": "NovaMobile",
+    "price_inr": 79452,
+    "specs": {
+      "feature_1": "Dimensity 7300",
+      "ram": "12GB",
+      "storage": "256GB"
+    },
+    "rating": 4.5,
+    "reviews_count": 237,
+    "customer_review": "Build quality feels premium and durable."
+  },
+  {
+    "product_id": "ELEC083",
+    "category": "Headphones",
+    "product_name": "AudioMax Headphones Model 83",
+    "brand": "AudioMax",
+    "price_inr": 73652,
+    "specs": {
+      "feature_1": "Hi-Res Audio",
+      "ram": "32GB",
+      "storage": "1TB"
+    },
+    "rating": 4.1,
+    "reviews_count": 3659,
+    "customer_review": "Great performance for productivity and entertainment."
+  },
+  {
+    "product_id": "ELEC084",
+    "category": "Tablet",
+    "product_name": "DigiPad Tablet Model 84",
+    "brand": "DigiPad",
+    "price_inr": 91362,
+    "specs": {
+      "feature_1": "2K Display",
+      "ram": "32GB",
+      "storage": "512GB"
+    },
+    "rating": 4.1,
+    "reviews_count": 2891,
+    "customer_review": "Battery life exceeded expectations during daily use."
+  },
+  {
+    "product_id": "ELEC085",
+    "category": "Smartwatch",
+    "product_name": "FitTrack Smartwatch Model 85",
+    "brand": "FitTrack",
+    "price_inr": 85968,
+    "specs": {
+      "feature_1": "GPS",
+      "ram": "32GB",
+      "storage": "512GB"
+    },
+    "rating": 4.4,
+    "reviews_count": 4637,
+    "customer_review": "Great performance for productivity and entertainment."
+  },
+  {
+    "product_id": "ELEC086",
+    "category": "Monitor",
+    "product_name": "VisionView Monitor Model 86",
+    "brand": "VisionView",
+    "price_inr": 105602,
+    "specs": {
+      "feature_1": "QHD",
+      "ram": "12GB",
+      "storage": "512GB"
+    },
+    "rating": 4.2,
+    "reviews_count": 259,
+    "customer_review": "Battery life exceeded expectations during daily use."
+  },
+  {
+    "product_id": "ELEC087",
+    "category": "SSD",
+    "product_name": "FlashCore SSD Model 87",
+    "brand": "FlashCore",
+    "price_inr": 68765,
+    "specs": {
+      "feature_1": "7000MB/s",
+      "ram": "8GB",
+      "storage": "1TB"
+    },
+    "rating": 4.2,
+    "reviews_count": 1991,
+    "customer_review": "User interface is smooth and easy to use."
+  },
+  {
+    "product_id": "ELEC088",
+    "category": "Router",
+    "product_name": "NetWave Router Model 88",
+    "brand": "NetWave",
+    "price_inr": 91894,
+    "specs": {
+      "feature_1": "Dual Band",
+      "ram": "32GB",
+      "storage": "128GB"
+    },
+    "rating": 4.2,
+    "reviews_count": 3050,
+    "customer_review": "Build quality feels premium and durable."
+  },
+  {
+    "product_id": "ELEC089",
+    "category": "Laptop",
+    "product_name": "TechNova Laptop Model 89",
+    "brand": "TechNova",
+    "price_inr": 71625,
+    "specs": {
+      "feature_1": "Ryzen 5",
+      "ram": "32GB",
+      "storage": "256GB"
+    },
+    "rating": 4.8,
+    "reviews_count": 2357,
+    "customer_review": "Good overall purchase with strong feature set."
+  },
+  {
+    "product_id": "ELEC090",
+    "category": "Smartphone",
+    "product_name": "NovaMobile Smartphone Model 90",
+    "brand": "NovaMobile",
+    "price_inr": 105786,
+    "specs": {
+      "feature_1": "Dimensity 7300",
+      "ram": "8GB",
+      "storage": "256GB"
+    },
+    "rating": 4.8,
+    "reviews_count": 4084,
+    "customer_review": "Great performance for productivity and entertainment."
+  },
+  {
+    "product_id": "ELEC091",
+    "category": "Headphones",
+    "product_name": "AudioMax Headphones Model 91",
+    "brand": "AudioMax",
+    "price_inr": 82842,
+    "specs": {
+      "feature_1": "Bluetooth 5.3",
+      "ram": "12GB",
+      "storage": "512GB"
+    },
+    "rating": 4.3,
+    "reviews_count": 1104,
+    "customer_review": "Great performance for productivity and entertainment."
+  },
+  {
+    "product_id": "ELEC092",
+    "category": "Tablet",
+    "product_name": "DigiPad Tablet Model 92",
+    "brand": "DigiPad",
+    "price_inr": 43788,
+    "specs": {
+      "feature_1": "2K Display",
+      "ram": "8GB",
+      "storage": "128GB"
+    },
+    "rating": 4.4,
+    "reviews_count": 2911,
+    "customer_review": "User interface is smooth and easy to use."
+  },
+  {
+    "product_id": "ELEC093",
+    "category": "Smartwatch",
+    "product_name": "FitTrack Smartwatch Model 93",
+    "brand": "FitTrack",
+    "price_inr": 85849,
+    "specs": {
+      "feature_1": "ECG",
+      "ram": "8GB",
+      "storage": "1TB"
+    },
+    "rating": 4.1,
+    "reviews_count": 1536,
+    "customer_review": "Build quality feels premium and durable."
+  },
+  {
+    "product_id": "ELEC094",
+    "category": "Monitor",
+    "product_name": "VisionView Monitor Model 94",
+    "brand": "VisionView",
+    "price_inr": 107498,
+    "specs": {
+      "feature_1": "4K IPS",
+      "ram": "12GB",
+      "storage": "128GB"
+    },
+    "rating": 4.2,
+    "reviews_count": 4722,
+    "customer_review": "Good overall purchase with strong feature set."
+  },
+  {
+    "product_id": "ELEC095",
+    "category": "SSD",
+    "product_name": "FlashCore SSD Model 95",
+    "brand": "FlashCore",
+    "price_inr": 27730,
+    "specs": {
+      "feature_1": "NVMe",
+      "ram": "16GB",
+      "storage": "512GB"
+    },
+    "rating": 4.5,
+    "reviews_count": 1983,
+    "customer_review": "User interface is smooth and easy to use."
+  },
+  {
+    "product_id": "ELEC096",
+    "category": "Router",
+    "product_name": "NetWave Router Model 96",
+    "brand": "NetWave",
+    "price_inr": 54446,
+    "specs": {
+      "feature_1": "Mesh",
+      "ram": "32GB",
+      "storage": "1TB"
+    },
+    "rating": 4.3,
+    "reviews_count": 1022,
+    "customer_review": "Build quality feels premium and durable."
+  },
+  {
+    "product_id": "ELEC097",
+    "category": "Laptop",
+    "product_name": "TechNova Laptop Model 97",
+    "brand": "TechNova",
+    "price_inr": 10012,
+    "specs": {
+      "feature_1": "Intel i5",
+      "ram": "32GB",
+      "storage": "128GB"
+    },
+    "rating": 4.7,
+    "reviews_count": 2779,
+    "customer_review": "Battery life exceeded expectations during daily use."
+  },
+  {
+    "product_id": "ELEC098",
+    "category": "Smartphone",
+    "product_name": "NovaMobile Smartphone Model 98",
+    "brand": "NovaMobile",
+    "price_inr": 56476,
+    "specs": {
+      "feature_1": "Snapdragon 8",
+      "ram": "16GB",
+      "storage": "512GB"
+    },
+    "rating": 4.3,
+    "reviews_count": 4937,
+    "customer_review": "Great performance for productivity and entertainment."
+  },
+  {
+    "product_id": "ELEC099",
+    "category": "Headphones",
+    "product_name": "AudioMax Headphones Model 99",
+    "brand": "AudioMax",
+    "price_inr": 58779,
+    "specs": {
+      "feature_1": "Bluetooth 5.3",
+      "ram": "32GB",
+      "storage": "256GB"
+    },
+    "rating": 4.2,
+    "reviews_count": 2745,
+    "customer_review": "Battery life exceeded expectations during daily use."
+  },
+  {
+    "product_id": "ELEC100",
+    "category": "Tablet",
+    "product_name": "DigiPad Tablet Model 100",
+    "brand": "DigiPad",
+    "price_inr": 112704,
+    "specs": {
+      "feature_1": "2K Display",
+      "ram": "8GB",
+      "storage": "256GB"
+    },
+    "rating": 4.3,
+    "reviews_count": 632,
+    "customer_review": "Excellent value for money and reliable performance."
+  }
+]

@@ -1,0 +1,101 @@
+product_id,category,product_name,brand,price_inr,rating,reviews_count,customer_review,spec_feature_1,spec_ram,spec_storage
+ELEC001,Laptop,TechNova Laptop Model 1,TechNova,95247,4.3,568,Good overall purchase with strong feature set.,Ryzen 7,8GB,256GB
+ELEC002,Smartphone,NovaMobile Smartphone Model 2,NovaMobile,51769,4.1,548,Excellent value for money and reliable performance.,Tensor G4,32GB,1TB
+ELEC003,Headphones,AudioMax Headphones Model 3,AudioMax,47179,4.9,1594,Build quality feels premium and durable.,Bluetooth 5.3,8GB,512GB
+ELEC004,Tablet,DigiPad Tablet Model 4,DigiPad,16583,4.9,2881,User interface is smooth and easy to use.,11-inch,32GB,128GB
+ELEC005,Smartwatch,FitTrack Smartwatch Model 5,FitTrack,17224,4.2,3235,Battery life exceeded expectations during daily use.,ECG,12GB,256GB
+ELEC006,Monitor,VisionView Monitor Model 6,VisionView,7887,4.2,1384,Good overall purchase with strong feature set.,165Hz,8GB,256GB
+ELEC007,SSD,FlashCore SSD Model 7,FlashCore,32574,4.6,3328,Great performance for productivity and entertainment.,7000MB/s,16GB,1TB
+ELEC008,Router,NetWave Router Model 8,NetWave,101659,4.4,3222,Great performance for productivity and entertainment.,Mesh,16GB,128GB
+ELEC009,Laptop,TechNova Laptop Model 9,TechNova,39780,4.8,809,Excellent value for money and reliable performance.,Intel i5,12GB,256GB
+ELEC010,Smartphone,NovaMobile Smartphone Model 10,NovaMobile,109512,4.3,3768,Great performance for productivity and entertainment.,Tensor G4,32GB,128GB
+ELEC011,Headphones,AudioMax Headphones Model 11,AudioMax,87306,4.3,4324,Battery life exceeded expectations during daily use.,Hi-Res Audio,16GB,1TB
+ELEC012,Tablet,DigiPad Tablet Model 12,DigiPad,45713,4.0,1745,Excellent value for money and reliable performance.,13-inch OLED,32GB,1TB
+ELEC013,Smartwatch,FitTrack Smartwatch Model 13,FitTrack,41985,4.7,525,Great performance for productivity and entertainment.,GPS,8GB,128GB
+ELEC014,Monitor,VisionView Monitor Model 14,VisionView,79569,4.4,994,User interface is smooth and easy to use.,4K IPS,8GB,128GB
+ELEC015,SSD,FlashCore SSD Model 15,FlashCore,117315,4.3,4222,Excellent value for money and reliable performance.,NVMe,12GB,256GB
+ELEC016,Router,NetWave Router Model 16,NetWave,15077,4.1,3889,Great performance for productivity and entertainment.,Wi‑Fi 6,12GB,1TB
+ELEC017,Laptop,TechNova Laptop Model 17,TechNova,6046,4.9,2161,Good overall purchase with strong feature set.,Intel i5,8GB,256GB
+ELEC018,Smartphone,NovaMobile Smartphone Model 18,NovaMobile,90486,4.0,2077,Good overall purchase with strong feature set.,Snapdragon 8,8GB,256GB
+ELEC019,Headphones,AudioMax Headphones Model 19,AudioMax,117382,4.6,1593,User interface is smooth and easy to use.,Bluetooth 5.3,8GB,128GB
+ELEC020,Tablet,DigiPad Tablet Model 20,DigiPad,64630,4.1,3105,Great performance for productivity and entertainment.,13-inch OLED,8GB,512GB
+ELEC021,Smartwatch,FitTrack Smartwatch Model 21,FitTrack,53715,4.4,2426,Excellent value for money and reliable performance.,ECG,8GB,256GB
+ELEC022,Monitor,VisionView Monitor Model 22,VisionView,10591,4.8,366,Excellent value for money and reliable performance.,165Hz,16GB,1TB
+ELEC023,SSD,FlashCore SSD Model 23,FlashCore,81805,4.8,3631,User interface is smooth and easy to use.,PCIe Gen4,32GB,512GB
+ELEC024,Router,NetWave Router Model 24,NetWave,56403,4.4,415,Build quality feels premium and durable.,Wi‑Fi 6,8GB,128GB
+ELEC025,Laptop,TechNova Laptop Model 25,TechNova,28464,4.4,356,User interface is smooth and easy to use.,Ryzen 5,12GB,128GB
+ELEC026,Smartphone,NovaMobile Smartphone Model 26,NovaMobile,54180,4.8,2419,Great performance for productivity and entertainment.,Dimensity 7300,32GB,128GB
+ELEC027,Headphones,AudioMax Headphones Model 27,AudioMax,87891,4.6,958,Great performance for productivity and entertainment.,ANC,32GB,256GB
+ELEC028,Tablet,DigiPad Tablet Model 28,DigiPad,30794,4.5,219,Battery life exceeded expectations during daily use.,11-inch,16GB,128GB
+ELEC029,Smartwatch,FitTrack Smartwatch Model 29,FitTrack,83383,4.2,1666,Great performance for productivity and entertainment.,ECG,12GB,256GB
+ELEC030,Monitor,VisionView Monitor Model 30,VisionView,42858,4.3,266,Build quality feels premium and durable.,165Hz,16GB,256GB
+ELEC031,SSD,FlashCore SSD Model 31,FlashCore,83146,4.3,1588,Build quality feels premium and durable.,PCIe Gen4,8GB,128GB
+ELEC032,Router,NetWave Router Model 32,NetWave,9762,4.8,1487,User interface is smooth and easy to use.,Wi‑Fi 6,12GB,512GB
+ELEC033,Laptop,TechNova Laptop Model 33,TechNova,24944,4.4,4047,Battery life exceeded expectations during daily use.,Ryzen 5,12GB,256GB
+ELEC034,Smartphone,NovaMobile Smartphone Model 34,NovaMobile,5277,4.1,4552,User interface is smooth and easy to use.,Tensor G4,12GB,1TB
+ELEC035,Headphones,AudioMax Headphones Model 35,AudioMax,39367,4.8,3699,Battery life exceeded expectations during daily use.,Hi-Res Audio,16GB,512GB
+ELEC036,Tablet,DigiPad Tablet Model 36,DigiPad,76387,4.6,1971,Battery life exceeded expectations during daily use.,13-inch OLED,32GB,1TB
+ELEC037,Smartwatch,FitTrack Smartwatch Model 37,FitTrack,36080,4.3,395,User interface is smooth and easy to use.,ECG,32GB,1TB
+ELEC038,Monitor,VisionView Monitor Model 38,VisionView,33051,4.5,1070,Battery life exceeded expectations during daily use.,165Hz,8GB,512GB
+ELEC039,SSD,FlashCore SSD Model 39,FlashCore,70253,4.9,2305,Battery life exceeded expectations during daily use.,PCIe Gen4,12GB,128GB
+ELEC040,Router,NetWave Router Model 40,NetWave,88970,4.5,3501,Good overall purchase with strong feature set.,Mesh,16GB,1TB
+ELEC041,Laptop,TechNova Laptop Model 41,TechNova,111198,4.5,797,Battery life exceeded expectations during daily use.,Ryzen 5,32GB,256GB
+ELEC042,Smartphone,NovaMobile Smartphone Model 42,NovaMobile,30558,4.2,413,Build quality feels premium and durable.,Tensor G4,12GB,256GB
+ELEC043,Headphones,AudioMax Headphones Model 43,AudioMax,49903,4.9,4990,User interface is smooth and easy to use.,ANC,12GB,512GB
+ELEC044,Tablet,DigiPad Tablet Model 44,DigiPad,64399,4.1,2524,User interface is smooth and easy to use.,13-inch OLED,16GB,128GB
+ELEC045,Smartwatch,FitTrack Smartwatch Model 45,FitTrack,11881,4.6,1805,Great performance for productivity and entertainment.,GPS,32GB,128GB
+ELEC046,Monitor,VisionView Monitor Model 46,VisionView,20466,4.5,1604,User interface is smooth and easy to use.,165Hz,8GB,512GB
+ELEC047,SSD,FlashCore SSD Model 47,FlashCore,79067,4.3,3242,Great performance for productivity and entertainment.,PCIe Gen4,16GB,128GB
+ELEC048,Router,NetWave Router Model 48,NetWave,26552,4.2,2619,Build quality feels premium and durable.,Mesh,12GB,128GB
+ELEC049,Laptop,TechNova Laptop Model 49,TechNova,110062,4.2,3077,Build quality feels premium and durable.,Intel i7,16GB,128GB
+ELEC050,Smartphone,NovaMobile Smartphone Model 50,NovaMobile,49248,4.5,1717,Battery life exceeded expectations during daily use.,Tensor G4,32GB,1TB
+ELEC051,Headphones,AudioMax Headphones Model 51,AudioMax,43145,4.3,2024,Build quality feels premium and durable.,Bluetooth 5.3,32GB,512GB
+ELEC052,Tablet,DigiPad Tablet Model 52,DigiPad,117867,4.6,4712,Good overall purchase with strong feature set.,11-inch,12GB,512GB
+ELEC053,Smartwatch,FitTrack Smartwatch Model 53,FitTrack,103872,4.9,873,Build quality feels premium and durable.,AMOLED,12GB,256GB
+ELEC054,Monitor,VisionView Monitor Model 54,VisionView,60321,4.7,1177,Build quality feels premium and durable.,165Hz,12GB,512GB
+ELEC055,SSD,FlashCore SSD Model 55,FlashCore,115218,4.5,3106,Excellent value for money and reliable performance.,NVMe,12GB,128GB
+ELEC056,Router,NetWave Router Model 56,NetWave,89905,4.2,452,Great performance for productivity and entertainment.,Mesh,12GB,128GB
+ELEC057,Laptop,TechNova Laptop Model 57,TechNova,51182,4.2,3747,Excellent value for money and reliable performance.,Ryzen 5,32GB,512GB
+ELEC058,Smartphone,NovaMobile Smartphone Model 58,NovaMobile,13081,4.4,4279,Build quality feels premium and durable.,Snapdragon 8,16GB,1TB
+ELEC059,Headphones,AudioMax Headphones Model 59,AudioMax,98868,4.7,4805,Excellent value for money and reliable performance.,Bluetooth 5.3,16GB,256GB
+ELEC060,Tablet,DigiPad Tablet Model 60,DigiPad,37368,4.4,1851,User interface is smooth and easy to use.,2K Display,32GB,256GB
+ELEC061,Smartwatch,FitTrack Smartwatch Model 61,FitTrack,41556,4.7,3924,Battery life exceeded expectations during daily use.,ECG,8GB,256GB
+ELEC062,Monitor,VisionView Monitor Model 62,VisionView,20889,4.3,4174,Good overall purchase with strong feature set.,QHD,16GB,256GB
+ELEC063,SSD,FlashCore SSD Model 63,FlashCore,33367,4.2,4118,Battery life exceeded expectations during daily use.,PCIe Gen4,8GB,1TB
+ELEC064,Router,NetWave Router Model 64,NetWave,60719,4.4,4617,Good overall purchase with strong feature set.,Dual Band,32GB,1TB
+ELEC065,Laptop,TechNova Laptop Model 65,TechNova,57957,4.9,1655,Build quality feels premium and durable.,Ryzen 5,8GB,1TB
+ELEC066,Smartphone,NovaMobile Smartphone Model 66,NovaMobile,28765,4.8,474,Battery life exceeded expectations during daily use.,Snapdragon 7,12GB,128GB
+ELEC067,Headphones,AudioMax Headphones Model 67,AudioMax,67207,4.6,1389,Excellent value for money and reliable performance.,Hi-Res Audio,8GB,512GB
+ELEC068,Tablet,DigiPad Tablet Model 68,DigiPad,15860,4.8,4711,Battery life exceeded expectations during daily use.,11-inch,32GB,1TB
+ELEC069,Smartwatch,FitTrack Smartwatch Model 69,FitTrack,24187,4.9,3510,User interface is smooth and easy to use.,GPS,8GB,512GB
+ELEC070,Monitor,VisionView Monitor Model 70,VisionView,6696,4.2,1437,User interface is smooth and easy to use.,165Hz,12GB,1TB
+ELEC071,SSD,FlashCore SSD Model 71,FlashCore,53247,4.8,4327,User interface is smooth and easy to use.,PCIe Gen4,16GB,1TB
+ELEC072,Router,NetWave Router Model 72,NetWave,72993,4.7,1619,Great performance for productivity and entertainment.,Mesh,12GB,128GB
+ELEC073,Laptop,TechNova Laptop Model 73,TechNova,35811,4.6,667,User interface is smooth and easy to use.,Intel i5,16GB,1TB
+ELEC074,Smartphone,NovaMobile Smartphone Model 74,NovaMobile,113096,4.7,4878,Great performance for productivity and entertainment.,Dimensity 7300,16GB,256GB
+ELEC075,Headphones,AudioMax Headphones Model 75,AudioMax,108897,4.6,4104,Good overall purchase with strong feature set.,Hi-Res Audio,12GB,256GB
+ELEC076,Tablet,DigiPad Tablet Model 76,DigiPad,8636,4.9,1845,User interface is smooth and easy to use.,13-inch OLED,8GB,512GB
+ELEC077,Smartwatch,FitTrack Smartwatch Model 77,FitTrack,67131,4.8,2181,Excellent value for money and reliable performance.,AMOLED,12GB,256GB
+ELEC078,Monitor,VisionView Monitor Model 78,VisionView,114572,4.6,3919,Battery life exceeded expectations during daily use.,165Hz,32GB,256GB
+ELEC079,SSD,FlashCore SSD Model 79,FlashCore,78092,4.6,3551,Battery life exceeded expectations during daily use.,NVMe,16GB,512GB
+ELEC080,Router,NetWave Router Model 80,NetWave,71337,4.0,4008,Battery life exceeded expectations during daily use.,Wi‑Fi 6,16GB,512GB
+ELEC081,Laptop,TechNova Laptop Model 81,TechNova,39861,4.1,4209,Excellent value for money and reliable performance.,Ryzen 7,8GB,1TB
+ELEC082,Smartphone,NovaMobile Smartphone Model 82,NovaMobile,79452,4.5,237,Build quality feels premium and durable.,Dimensity 7300,12GB,256GB
+ELEC083,Headphones,AudioMax Headphones Model 83,AudioMax,73652,4.1,3659,Great performance for productivity and entertainment.,Hi-Res Audio,32GB,1TB
+ELEC084,Tablet,DigiPad Tablet Model 84,DigiPad,91362,4.1,2891,Battery life exceeded expectations during daily use.,2K Display,32GB,512GB
+ELEC085,Smartwatch,FitTrack Smartwatch Model 85,FitTrack,85968,4.4,4637,Great performance for productivity and entertainment.,GPS,32GB,512GB
+ELEC086,Monitor,VisionView Monitor Model 86,VisionView,105602,4.2,259,Battery life exceeded expectations during daily use.,QHD,12GB,512GB
+ELEC087,SSD,FlashCore SSD Model 87,FlashCore,68765,4.2,1991,User interface is smooth and easy to use.,7000MB/s,8GB,1TB
+ELEC088,Router,NetWave Router Model 88,NetWave,91894,4.2,3050,Build quality feels premium and durable.,Dual Band,32GB,128GB
+ELEC089,Laptop,TechNova Laptop Model 89,TechNova,71625,4.8,2357,Good overall purchase with strong feature set.,Ryzen 5,32GB,256GB
+ELEC090,Smartphone,NovaMobile Smartphone Model 90,NovaMobile,105786,4.8,4084,Great performance for productivity and entertainment.,Dimensity 7300,8GB,256GB
+ELEC091,Headphones,AudioMax Headphones Model 91,AudioMax,82842,4.3,1104,Great performance for productivity and entertainment.,Bluetooth 5.3,12GB,512GB
+ELEC092,Tablet,DigiPad Tablet Model 92,DigiPad,43788,4.4,2911,User interface is smooth and easy to use.,2K Display,8GB,128GB
+ELEC093,Smartwatch,FitTrack Smartwatch Model 93,FitTrack,85849,4.1,1536,Build quality feels premium and durable.,ECG,8GB,1TB
+ELEC094,Monitor,VisionView Monitor Model 94,VisionView,107498,4.2,4722,Good overall purchase with strong feature set.,4K IPS,12GB,128GB
+ELEC095,SSD,FlashCore SSD Model 95,FlashCore,27730,4.5,1983,User interface is smooth and easy to use.,NVMe,16GB,512GB
+ELEC096,Router,NetWave Router Model 96,NetWave,54446,4.3,1022,Build quality feels premium and durable.,Mesh,32GB,1TB
+ELEC097,Laptop,TechNova Laptop Model 97,TechNova,10012,4.7,2779,Battery life exceeded expectations during daily use.,Intel i5,32GB,128GB
+ELEC098,Smartphone,NovaMobile Smartphone Model 98,NovaMobile,56476,4.3,4937,Great performance for productivity and entertainment.,Snapdragon 8,16GB,512GB
+ELEC099,Headphones,AudioMax Headphones Model 99,AudioMax,58779,4.2,2745,Battery life exceeded expectations during daily use.,Bluetooth 5.3,32GB,256GB
+ELEC100,Tablet,DigiPad Tablet Model 100,DigiPad,112704,4.3,632,Excellent value for money and reliable performance.,2K Display,8GB,256GB
