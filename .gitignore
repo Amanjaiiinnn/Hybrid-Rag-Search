@@ -1,0 +1,14 @@
+# Python cache
+__pycache__/
+*.py[cod]
+
+# Secrets (copy .env.example to .env locally; never commit .env)
+.env
+
+# Virtual environments
+venv/
+.venv/
+env/
+
+# Local agent tooling
+.agents/

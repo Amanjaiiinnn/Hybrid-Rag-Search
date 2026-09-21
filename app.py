@@ -135,6 +135,24 @@ st.markdown("""
 st.sidebar.image("https://img.icons8.com/nolan/128/search.png", width=70)
 st.sidebar.title("Configuration Panel")
 
+# 0. Backend Architecture Status
+st.sidebar.subheader("🌐 Architecture Mode")
+fastapi_url = os.environ.get("FASTAPI_URL", "http://localhost:8000")
+is_fastapi_available = False
+try:
+    resp = requests.get(f"{fastapi_url}/health", timeout=0.8)
+    if resp.status_code == 200:
+        is_fastapi_available = True
+except Exception:
+    is_fastapi_available = False
+
+if is_fastapi_available:
+    st.sidebar.success("🟢 FastAPI Backend: Online")
+    st.sidebar.markdown(f"👉 [Open Swagger UI Docs]({fastapi_url}/docs)")
+else:
+    st.sidebar.info("🟡 Standalone Engine: Direct Execution")
+    st.sidebar.caption("Start FastAPI (`uvicorn api:app`) to connect REST API")
+
 # 1. API Keys Section
 st.sidebar.subheader("🔑 API Setup")
 groq_api_key = st.sidebar.text_input("Groq API Key", type="password", help="Paste your Groq API key (starts with gsk_)")
