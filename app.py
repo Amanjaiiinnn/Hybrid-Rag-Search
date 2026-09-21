@@ -2,6 +2,7 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 import os
+import requests
 import matplotlib.pyplot as plt
 
 # Import custom modules
@@ -148,7 +149,10 @@ except Exception:
 
 if is_fastapi_available:
     st.sidebar.success("🟢 FastAPI Backend: Online")
-    st.sidebar.markdown(f"👉 [Open Swagger UI Docs]({fastapi_url}/docs)")
+    # FASTAPI_URL may be an internal Docker address (http://backend:8000) the browser
+    # can't reach, so point the docs link at port 8000 on the host serving this page
+    browser_host = st.context.headers.get("Host", "localhost").rsplit(":", 1)[0]
+    st.sidebar.markdown(f"👉 [Open Swagger UI Docs](http://{browser_host}:8000/docs)")
 else:
     st.sidebar.info("🟡 Standalone Engine: Direct Execution")
     st.sidebar.caption("Start FastAPI (`uvicorn api:app`) to connect REST API")

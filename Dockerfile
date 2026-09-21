@@ -30,4 +30,5 @@ HEALTHCHECK --interval=30s --timeout=5s --start-period=10s --retries=3 \
     CMD curl --fail http://localhost:8501/_stcore/health || exit 1
 
 # Start Streamlit bound to 0.0.0.0 so it is accessible outside the container
-ENTRYPOINT ["streamlit", "run", "app.py", "--server.port=8501", "--server.address=0.0.0.0"]
+# (CMD rather than ENTRYPOINT so docker-compose's `command:` can override it)
+CMD ["streamlit", "run", "app.py", "--server.port=8501", "--server.address=0.0.0.0"]

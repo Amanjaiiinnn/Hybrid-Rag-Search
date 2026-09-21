@@ -4,6 +4,7 @@ __pycache__/
 
 # Secrets (copy .env.example to .env locally; never commit .env)
 .env
+*.pem
 
 # Virtual environments
 venv/
