@@ -4,6 +4,8 @@ A Retrieval-Augmented Generation (RAG) app built from scratch in Python. It sear
 
 The retrieval maths (tokenisation, BM25, cosine similarity, rank fusion, metrics) is implemented directly with Python and NumPy. It doesn't use a search library or vector database.
 
+The same engine is also available as a **FastAPI** REST API, and a **Docker Compose** setup runs the API and the app together, ready to deploy on a server such as **AWS EC2**.
+
 ---
 
 ## Contents
@@ -15,6 +17,9 @@ The retrieval maths (tokenisation, BM25, cosine similarity, rank fusion, metrics
 - [Project Structure](#project-structure)
 - [Getting Started](#getting-started)
 - [Using the App](#using-the-app)
+- [REST API](#rest-api)
+- [Run with Docker](#run-with-docker)
+- [Deploy on AWS EC2](#deploy-on-aws-ec2)
 - [Dataset](#dataset)
 - [Running the Modules on Their Own](#running-the-modules-on-their-own)
 - [Customisation](#customisation)
@@ -30,6 +35,8 @@ The retrieval maths (tokenisation, BM25, cosine similarity, rank fusion, metrics
 - **Grounded answers** from Groq (`llama-3.3-70b-versatile` or `llama-3.1-8b-instant`), using the results of whichever retriever you pick as context.
 - **Retrieval benchmark** with six hand-labelled queries and four standard IR metrics.
 - **Interactive maths walkthrough** with sliders for BM25 saturation, 2-D cosine similarity, fusion and the metrics.
+- **REST API** (FastAPI) for search, grounded answers, catalog filtering and the benchmark, with Swagger docs.
+- **Docker Compose** setup that runs the API and the Streamlit app as two containers, with steps for deploying on AWS EC2.
 
 ---
 
@@ -186,11 +193,13 @@ Because both signals are lexical in this setup, running with sentence-transforme
 
 | Area | Tools |
 |---|---|
-| App | Streamlit |
+| App | Streamlit, Matplotlib |
 | Retrieval maths | Python, NumPy |
 | Data | Pandas, JSON / CSV |
 | Embeddings | Hugging Face Inference API, optional sentence-transformers, TF-IDF fallback |
 | LLM | Groq chat completions API (Llama 3.3 70B / Llama 3.1 8B) via `requests` |
+| API | FastAPI, Uvicorn, Pydantic |
+| Deployment | Docker, Docker Compose, AWS EC2 |
 
 ---
 
@@ -199,6 +208,7 @@ Because both signals are lexical in this setup, running with sentence-transforme
 ```text
 Hybrid-Rag-Search/
 ├── app.py                          # Streamlit app: sidebar settings and the three tabs
+├── api.py                          # FastAPI REST API over the same engine
 ├── bm25.py                         # BM25Retriever: tokeniser, index, IDF, scoring
 ├── vector_search.py                # VectorSearchEngine: document embeddings + cosine similarity
 ├── embeddings_client.py            # EmbeddingClient: HF API → sentence-transformers → TF-IDF
@@ -208,6 +218,10 @@ Hybrid-Rag-Search/
 ├── data_store.py                   # Catalog loading and document construction
 ├── electronics_catalog_100.json    # Product catalog (primary)
 ├── electronics_catalog_100.csv     # Same catalog as CSV (fallback)
+├── Dockerfile                      # Python 3.11 image shared by both services
+├── docker-compose.yml              # backend (FastAPI, port 8000) + frontend (Streamlit, port 8501)
+├── .env.example                    # Optional keys for Docker Compose (copy to .env)
+├── .dockerignore
 ├── requirements.txt
 └── .gitignore
 ```
@@ -220,6 +234,7 @@ Hybrid-Rag-Search/
 
 - Python 3.9 or newer
 - A Groq API key for answer generation, free at [console.groq.com](https://console.groq.com). Search and evaluation work without it.
+- Docker with Compose (optional), to run everything in containers
 
 ### Install
 
@@ -253,6 +268,16 @@ streamlit run app.py
 
 Run the command from the project folder, because the catalog is loaded from the current directory. Streamlit opens the app at `http://localhost:8501`.
 
+### Run the REST API (optional)
+
+In a second terminal, also from the project folder:
+
+```bash
+uvicorn api:app --reload
+```
+
+The API starts at `http://localhost:8000`, with interactive docs at `http://localhost:8000/docs`. Once it's up, the Streamlit sidebar shows **🟢 FastAPI Backend: Online**. See [REST API](#rest-api) for the endpoints.
+
 ### API keys
 
 Both keys are entered in the sidebar. The app doesn't read them from environment variables.
@@ -267,6 +292,12 @@ Both keys are entered in the sidebar. The app doesn't read them from environment
 ## Using the App
 
 ### Sidebar
+
+The top of the sidebar shows the **Architecture Mode**:
+- **🟢 FastAPI Backend: Online:** the REST API is reachable at `FASTAPI_URL` (default `http://localhost:8000`). A link to its Swagger docs appears underneath.
+- **🟡 Standalone Engine:** the API isn't reachable.
+
+Either way, the app runs searches itself; the API is a separate way into the same engine.
 
 | Setting | Range | Default |
 |---|---|---|
@@ -297,6 +328,143 @@ Formulas and small simulations for:
 - **Vector embeddings and cosine similarity:** move a query vector and a document vector in 2-D.
 - **Hybrid search fusion:** RRF and score fusion.
 - **Evaluation metrics:** Precision@K, Recall@K, MRR and NDCG@K.
+
+---
+
+## REST API
+
+`api.py` serves the same retrieval engine over HTTP with FastAPI. The indexes are built once, when the server starts.
+
+| Method | Endpoint | What it does |
+|---|---|---|
+| `GET` | `/health` | Health check, with the number of indexed products |
+| `GET` | `/api/v1/products` | Browse the catalog, filtered by `category` and `max_price` (`limit` 1–100, default 20) |
+| `POST` | `/api/v1/search` | Search with BM25, vector or hybrid retrieval |
+| `POST` | `/api/v1/rag/chat` | Retrieve products and generate a grounded Groq answer from them |
+| `GET` | `/api/v1/evaluate` | Run the benchmark and return the metrics at cutoff `k` (1–10, default 3) |
+
+Interactive docs are at `/docs` (Swagger UI, with **Try it out** buttons) and `/redoc`. CORS is open to all origins.
+
+### Search
+
+```bash
+curl -X POST http://localhost:8000/api/v1/search \
+  -H "Content-Type: application/json" \
+  -d '{"query": "Smartwatch with ECG support", "mode": "hybrid_rrf", "top_k": 2}'
+```
+
+| Field | Default | Allowed values |
+|---|---|---|
+| `query` | required | Any text |
+| `mode` | `hybrid_rrf` | `bm25`, `vector`, `hybrid_rrf`, `hybrid_score` |
+| `top_k` | 4 | 1 – 20 |
+| `k1`, `b` | 1.5, 0.75 | BM25 parameters, applied in `bm25` mode |
+| `rrf_k` | 60 | 1 – 100, for `hybrid_rrf` |
+| `alpha` | 0.5 | 0 – 1, the BM25 weight for `hybrid_score` |
+
+Each result has the product's fields plus its `score` and `score_type`. The response below is trimmed to its first result:
+
+```json
+{
+  "query": "Smartwatch with ECG support",
+  "mode": "hybrid_rrf",
+  "total_results": 2,
+  "results": [
+    {
+      "product_id": "ELEC029",
+      "product_name": "FitTrack Smartwatch Model 29",
+      "category": "Smartwatch",
+      "brand": "FitTrack",
+      "price_inr": 83383,
+      "rating": 4.2,
+      "reviews_count": 1666,
+      "specs": {"feature_1": "ECG", "ram": "12GB", "storage": "256GB"},
+      "customer_review": "Great performance for productivity and entertainment.",
+      "score": 0.03252,
+      "score_type": "RRF Score"
+    }
+  ]
+}
+```
+
+### Grounded answers
+
+`POST /api/v1/rag/chat` takes `query`, `mode` and `top_k` (1 – 10) like the search endpoint, plus optional `groq_api_key`, `model` (default `llama-3.3-70b-versatile`) and `system_prompt`. It returns the `answer` and the `retrieved_products` used as context.
+
+The Groq key comes from `groq_api_key` in the request, or from the server's `GROQ_API_KEY` environment variable when the request has none. Without either, the endpoint still returns the retrieved products, with a warning in `answer`.
+
+> **On a public server, leave `GROQ_API_KEY` unset.** Otherwise anyone who can reach the API can generate answers with your key.
+
+---
+
+## Run with Docker
+
+`docker-compose.yml` runs two containers built from the same `Dockerfile`:
+
+| Service | Container | Port | Runs |
+|---|---|---|---|
+| `backend` | `rag-fastapi-backend` | 8000 | `uvicorn api:app` |
+| `frontend` | `rag-streamlit-frontend` | 8501 | `streamlit run app.py`, with `FASTAPI_URL=http://backend:8000` |
+
+From the project folder:
+
+```bash
+docker compose up -d --build
+```
+
+Then open `http://localhost:8501` for the app and `http://localhost:8000/docs` for the API. Both containers have health checks and restart automatically unless you stop them.
+
+| Command | What it does |
+|---|---|
+| `docker compose ps` | Shows the containers, marked `(healthy)` once ready |
+| `docker compose logs -f` | Follows the logs |
+| `docker compose down` | Stops and removes the containers |
+
+**Keys (optional):** Compose reads `GROQ_API_KEY` and `HF_API_TOKEN` from a `.env` file next to `docker-compose.yml`. Copy `.env.example` to `.env` and fill in what you need. `.env` is kept out of both Git and the Docker image. The Streamlit app always takes the Groq key from its sidebar, so `GROQ_API_KEY` only matters for the REST API.
+
+---
+
+## Deploy on AWS EC2
+
+The Docker setup runs unchanged on a small EC2 instance.
+
+1. **Launch an instance** from the EC2 console: **Ubuntu Server 24.04 LTS**, a free-tier-eligible type such as `t3.micro`, a new key pair, and **20 GiB** of storage.
+2. **Add inbound rules** to its security group:
+
+   | Port | Source | For |
+   |---|---|---|
+   | 22 | My IP | SSH |
+   | 8501 | Anywhere | Streamlit app |
+   | 8000 | Anywhere | REST API and Swagger docs (optional) |
+
+3. **Connect** with the key pair's `.pem` file:
+
+   ```bash
+   ssh -i path/to/your-key.pem ubuntu@<public-ip>
+   ```
+
+4. **On the server**, add swap (recommended on 1 GB instances), install Docker and start the app:
+
+   ```bash
+   sudo fallocate -l 2G /swapfile && sudo chmod 600 /swapfile && sudo mkswap /swapfile && sudo swapon /swapfile
+   echo '/swapfile none swap sw 0 0' | sudo tee -a /etc/fstab
+   sudo apt update && sudo apt install -y docker.io docker-compose-v2 git
+   git clone https://github.com/Amanjaiiinnn/Hybrid-Rag-Search.git
+   cd Hybrid-Rag-Search
+   sudo docker compose up -d --build
+   ```
+
+5. **Open** `http://<public-ip>:8501` for the app and `http://<public-ip>:8000/docs` for the API.
+
+Docker starts on boot and brings the containers back up, so the app survives a reboot.
+
+**Updating:** after pushing changes to GitHub, run this on the server in `Hybrid-Rag-Search`:
+
+```bash
+git pull && sudo docker compose up -d --build
+```
+
+**Costs:** stop or terminate the instance when you no longer need it. The public IP changes whenever the instance is stopped and started again; attach an Elastic IP if you need a fixed address.
 
 ---
 
@@ -343,6 +511,7 @@ python evaluation.py        # full benchmark on the catalog, K = 3
 | Change the answer style or rules | `DEFAULT_SYSTEM_PROMPT` in `groq_client.py` |
 | Change the embedding model | `model_name` in `EmbeddingClient` |
 | Change stop words or tokenisation | `STOP_WORDS` and `_tokenize()` in `bm25.py` |
+| Change ports or container settings | `docker-compose.yml` |
 
 ---
 

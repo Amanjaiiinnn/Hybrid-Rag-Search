@@ -10,3 +10,4 @@ venv/
 .gitignore
 .dockerignore
 .agents/
+.env
