@@ -1,0 +1,1129 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+
+<style>
+  :root { color-scheme: light dark; }
+  body { margin: 0; }
+  img { max-width: 100%; }
+  [hidden] { display: none !important; }
+</style>
+<title>Hybrid RAG Defence Kit</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Literata:opsz,wght@7..72,400;7..72,600;7..72,700&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+
+<style>
+:root{
+  --paper:#F6F7F4; --surface:#FFFFFF; --sunk:#ECEFE9;
+  --ink:#171E24; --ink2:#41505A; --ink3:#6C7B85;
+  --rule:#DADED5; --rule2:#BBC2B7;
+  --lex:#9A4A2A; --lex-bg:#F4E7E0;
+  --sem:#215F7C; --sem-bg:#DEEAF0;
+  --fuse:#57528D; --fuse-bg:#E5E3F0;
+  --warn:#835400; --warn-bg:#F7EFDC;
+  --accent:#1D4B60;
+  --shadow:0 1px 2px rgba(23,30,36,.05), 0 8px 24px -16px rgba(23,30,36,.28);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#10151A; --surface:#182027; --sunk:#0B1014;
+    --ink:#E8ECEF; --ink2:#AEBCC4; --ink3:#83939E;
+    --rule:#29343C; --rule2:#3C4B55;
+    --lex:#E39871; --lex-bg:#2D2019;
+    --sem:#7CC0DD; --sem-bg:#13242D;
+    --fuse:#ABA5E2; --fuse-bg:#1D1B2A;
+    --warn:#E2B667; --warn-bg:#292213;
+    --accent:#92C8DE;
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 8px 24px -16px rgba(0,0,0,.8);
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#10151A; --surface:#182027; --sunk:#0B1014;
+  --ink:#E8ECEF; --ink2:#AEBCC4; --ink3:#83939E;
+  --rule:#29343C; --rule2:#3C4B55;
+  --lex:#E39871; --lex-bg:#2D2019;
+  --sem:#7CC0DD; --sem-bg:#13242D;
+  --fuse:#ABA5E2; --fuse-bg:#1D1B2A;
+  --warn:#E2B667; --warn-bg:#292213;
+  --accent:#92C8DE;
+  --shadow:0 1px 2px rgba(0,0,0,.4), 0 8px 24px -16px rgba(0,0,0,.8);
+}
+
+*{box-sizing:border-box}
+body{
+  background:var(--paper); color:var(--ink);
+  font-family:"IBM Plex Sans", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  font-size:16px; line-height:1.65; margin:0;
+  -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:860px; margin-inline:auto; padding-inline:20px; padding-block:0 72px}
+
+/* ---------- nav ---------- */
+.topbar{
+  position:sticky; top:env(safe-area-inset-top, 0px); z-index:50;
+  background:color-mix(in srgb, var(--paper) 88%, transparent);
+  backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--rule);
+}
+.topbar-in{
+  max-width:860px; margin-inline:auto; padding-inline:20px;
+  display:flex; align-items:center; gap:14px; min-height:46px;
+}
+.navscroll{display:flex; gap:4px; overflow-x:auto; scrollbar-width:none; flex:1; padding-block:6px}
+.navscroll::-webkit-scrollbar{display:none}
+.navscroll a{
+  flex:0 0 auto; font-family:"IBM Plex Mono", ui-monospace, monospace;
+  font-size:11.5px; letter-spacing:.04em; text-transform:uppercase;
+  color:var(--ink3); text-decoration:none; padding:5px 9px; border-radius:5px; white-space:nowrap;
+}
+.navscroll a:hover{color:var(--ink); background:var(--sunk)}
+.themebtn{
+  flex:0 0 auto; background:none; border:1px solid var(--rule2); color:var(--ink2);
+  border-radius:5px; width:30px; height:26px; cursor:pointer; font-size:13px; line-height:1;
+}
+.themebtn:hover{background:var(--sunk); color:var(--ink)}
+
+/* ---------- masthead ---------- */
+.masthead{padding-block:52px 40px; border-bottom:2px solid var(--ink); margin-bottom:8px}
+.kicker{
+  font-family:"IBM Plex Mono", monospace; font-size:11.5px; letter-spacing:.14em;
+  text-transform:uppercase; color:var(--ink3); margin:0 0 16px;
+}
+h1{
+  font-family:Literata, Georgia, serif; font-weight:700; font-size:clamp(34px, 7vw, 54px);
+  line-height:1.05; letter-spacing:-.015em; margin:0 0 18px; text-wrap:balance;
+}
+.standfirst{font-size:18px; color:var(--ink2); margin:0; max-width:60ch}
+.standfirst strong{color:var(--ink); font-weight:600}
+
+.factstrip{
+  display:flex; flex-wrap:wrap; gap:0; margin-top:30px;
+  border:1px solid var(--rule); border-radius:8px; background:var(--surface); overflow:hidden;
+}
+.fact{flex:1 1 130px; padding:12px 14px; border-right:1px solid var(--rule)}
+.fact:last-child{border-right:none}
+.fact dt{
+  font-family:"IBM Plex Mono", monospace; font-size:10.5px; letter-spacing:.09em;
+  text-transform:uppercase; color:var(--ink3); margin:0 0 3px;
+}
+.fact dd{margin:0; font-weight:600; font-size:15px; font-variant-numeric:tabular-nums}
+
+/* ---------- sections ---------- */
+section{padding-block:44px; border-bottom:1px solid var(--rule)}
+section:last-of-type{border-bottom:none}
+h2{
+  font-family:Literata, Georgia, serif; font-weight:700; font-size:clamp(24px,4.4vw,32px);
+  line-height:1.18; letter-spacing:-.01em; margin:0 0 6px; text-wrap:balance; scroll-margin-top:70px;
+}
+.h2num{
+  font-family:"IBM Plex Mono", monospace; font-size:12px; color:var(--ink3);
+  letter-spacing:.1em; display:block; margin-bottom:10px;
+}
+h3{
+  font-family:Literata, Georgia, serif; font-weight:600; font-size:20px;
+  margin:32px 0 8px; line-height:1.3; scroll-margin-top:70px;
+}
+h4{font-size:15px; font-weight:600; margin:22px 0 6px; color:var(--ink)}
+p{margin:0 0 14px; max-width:66ch}
+ul,ol{margin:0 0 14px; padding-left:22px; max-width:66ch}
+li{margin-bottom:7px}
+a{color:var(--accent)}
+strong{font-weight:600}
+code{
+  font-family:"IBM Plex Mono", ui-monospace, monospace; font-size:.875em;
+  background:var(--sunk); padding:1.5px 5px; border-radius:4px; color:var(--ink);
+}
+
+/* ---------- plain-words rail ---------- */
+.plain{
+  border-left:3px solid var(--accent); background:var(--surface);
+  padding:14px 16px 14px 18px; margin:0 0 20px; border-radius:0 8px 8px 0;
+}
+.plain .tag{
+  font-family:"IBM Plex Mono", monospace; font-size:10.5px; letter-spacing:.1em;
+  text-transform:uppercase; color:var(--accent); display:block; margin-bottom:5px; font-weight:600;
+}
+.plain p{margin:0 0 10px}
+.plain p:last-child{margin-bottom:0}
+
+/* ---------- callouts ---------- */
+.flag{
+  background:var(--warn-bg); border:1px solid color-mix(in srgb, var(--warn) 30%, transparent);
+  border-radius:8px; padding:14px 16px; margin:0 0 20px;
+}
+.flag .tag{
+  font-family:"IBM Plex Mono", monospace; font-size:10.5px; letter-spacing:.1em;
+  text-transform:uppercase; color:var(--warn); font-weight:600; display:block; margin-bottom:5px;
+}
+.flag p{margin:0 0 10px} .flag p:last-child{margin-bottom:0}
+
+/* ---------- code ---------- */
+pre{
+  background:var(--sunk); border:1px solid var(--rule); border-radius:8px;
+  padding:14px 16px; overflow-x:auto; margin:0 0 20px;
+  font-family:"IBM Plex Mono", monospace; font-size:12.5px; line-height:1.65; color:var(--ink2);
+}
+pre code{background:none; padding:0; font-size:inherit}
+pre .hi{color:var(--lex); font-weight:500}
+pre .cm{color:var(--ink3); font-style:italic}
+
+/* ---------- formula ---------- */
+.formula{
+  background:var(--surface); border:1px solid var(--rule); border-radius:8px;
+  padding:18px 16px; margin:0 0 8px; overflow-x:auto; text-align:center;
+  font-family:"IBM Plex Mono", monospace; font-size:14px; color:var(--ink);
+}
+.formula .lhs{color:var(--ink2)}
+.frac{display:inline-flex; flex-direction:column; vertical-align:middle; text-align:center; margin:0 4px}
+.frac .num{border-bottom:1.5px solid var(--ink2); padding:0 8px 3px}
+.frac .den{padding:3px 8px 0}
+.fcap{
+  font-size:13px; color:var(--ink3); margin:0 0 20px; text-align:center;
+  font-family:"IBM Plex Mono", monospace;
+}
+
+/* ---------- tables ---------- */
+.tscroll{overflow-x:auto; margin:0 0 8px; border:1px solid var(--rule); border-radius:8px; background:var(--surface)}
+table{border-collapse:collapse; width:100%; font-size:13.5px; min-width:480px}
+th,td{padding:9px 13px; text-align:left; border-bottom:1px solid var(--rule)}
+tr:last-child td{border-bottom:none}
+th{
+  font-family:"IBM Plex Mono", monospace; font-size:10.5px; letter-spacing:.07em;
+  text-transform:uppercase; color:var(--ink3); font-weight:600; background:var(--sunk);
+  white-space:nowrap;
+}
+td{font-variant-numeric:tabular-nums; color:var(--ink2)}
+td:first-child{color:var(--ink); font-weight:500}
+td.best{color:var(--ink); font-weight:600}
+.tnote{font-size:13px; color:var(--ink3); margin:0 0 20px}
+
+/* ---------- diagram ---------- */
+.dscroll{overflow-x:auto; margin:0 0 8px; padding-bottom:4px}
+.dscroll svg{display:block; min-width:660px; max-width:100%; height:auto; margin-inline:auto}
+.chartbox svg{min-width:460px}
+svg .box{fill:var(--surface); stroke:var(--rule2); stroke-width:1.2}
+svg .box-lex{fill:var(--lex-bg); stroke:var(--lex); stroke-width:1.4}
+svg .box-sem{fill:var(--sem-bg); stroke:var(--sem); stroke-width:1.4}
+svg .box-fuse{fill:var(--fuse-bg); stroke:var(--fuse); stroke-width:1.4}
+svg .lbl{fill:var(--ink); font-family:"IBM Plex Sans",sans-serif; font-size:13px; font-weight:600}
+svg .sub{fill:var(--ink3); font-family:"IBM Plex Mono",monospace; font-size:10.5px}
+svg .arw{stroke:var(--rule2); stroke-width:1.4; fill:none}
+svg .axis{stroke:var(--rule2); stroke-width:1}
+svg .grid{stroke:var(--rule); stroke-width:1; stroke-dasharray:3 4}
+svg .tick{fill:var(--ink3); font-family:"IBM Plex Mono",monospace; font-size:10px}
+svg .curve-a{stroke:var(--sem); stroke-width:2.5; fill:none}
+svg .curve-b{stroke:var(--lex); stroke-width:2; fill:none; stroke-dasharray:5 4}
+
+/* ---------- module cards ---------- */
+.mods{display:grid; gap:12px; margin:0 0 8px}
+.mod{
+  background:var(--surface); border:1px solid var(--rule); border-radius:8px;
+  padding:15px 17px; box-shadow:var(--shadow);
+}
+.mod h4{
+  margin:0 0 4px; font-family:"IBM Plex Mono", monospace; font-size:13.5px;
+  font-weight:600; color:var(--ink);
+}
+.mod .role{
+  font-size:11px; font-family:"IBM Plex Mono",monospace; letter-spacing:.07em;
+  text-transform:uppercase; color:var(--ink3); margin:0 0 9px;
+}
+.mod p{margin:0 0 9px; font-size:14.5px}
+.mod p:last-child{margin-bottom:0}
+.mod .poke{
+  font-size:13.5px; color:var(--ink2); border-top:1px dashed var(--rule);
+  padding-top:9px; margin-top:11px;
+}
+.mod .poke b{color:var(--lex); font-weight:600}
+
+/* ---------- Q&A ---------- */
+.qhead{display:flex; align-items:baseline; justify-content:space-between; gap:12px; flex-wrap:wrap; margin-bottom:14px}
+.expandall{
+  background:var(--surface); border:1px solid var(--rule2); color:var(--ink2);
+  font-family:"IBM Plex Mono",monospace; font-size:11px; letter-spacing:.06em; text-transform:uppercase;
+  padding:6px 11px; border-radius:6px; cursor:pointer;
+}
+.expandall:hover{background:var(--sunk); color:var(--ink)}
+.qgroup{margin-bottom:26px}
+.qgroup > h3{margin-top:0; display:flex; align-items:center; gap:9px}
+.qgroup > h3 .n{
+  font-family:"IBM Plex Mono",monospace; font-size:11px; color:var(--ink3);
+  font-weight:400; letter-spacing:.06em;
+}
+details.qa{
+  background:var(--surface); border:1px solid var(--rule); border-radius:8px;
+  margin-bottom:7px; overflow:hidden;
+}
+details.qa[open]{border-color:var(--rule2)}
+details.qa summary{
+  cursor:pointer; padding:12px 15px 12px 38px; position:relative; font-weight:500;
+  font-size:15px; list-style:none; line-height:1.45;
+}
+details.qa summary::-webkit-details-marker{display:none}
+details.qa summary::before{
+  content:"+"; position:absolute; left:15px; top:12px;
+  font-family:"IBM Plex Mono",monospace; color:var(--ink3); font-weight:600;
+}
+details.qa[open] summary::before{content:"\2212"; color:var(--accent)}
+details.qa summary:hover{background:var(--sunk)}
+details.qa summary:focus-visible{outline:2px solid var(--accent); outline-offset:-2px}
+.qbody{padding:2px 15px 14px 38px; border-top:1px solid var(--rule); margin-top:2px}
+.qbody p{font-size:14.5px; margin:12px 0 0; color:var(--ink2)}
+.qbody p:first-child{margin-top:12px}
+.qbody p strong{color:var(--ink)}
+.qbody ul{font-size:14.5px; color:var(--ink2); margin:10px 0 0}
+.sharp{
+  font-family:"IBM Plex Mono",monospace; font-size:9.5px; letter-spacing:.09em;
+  text-transform:uppercase; color:var(--lex); border:1px solid color-mix(in srgb, var(--lex) 40%, transparent);
+  background:var(--lex-bg); padding:2px 6px; border-radius:4px; margin-left:8px;
+  white-space:nowrap; font-weight:600; vertical-align:2px;
+}
+
+/* ---------- cheat card ---------- */
+.cheat{
+  background:var(--surface); border:1.5px solid var(--ink); border-radius:10px;
+  padding:6px 0; margin:0 0 8px;
+}
+.cheat dl{display:grid; grid-template-columns:1fr auto; margin:0}
+.cheat dt, .cheat dd{padding:8px 18px; margin:0; border-bottom:1px solid var(--rule)}
+.cheat dt{font-size:14px; color:var(--ink2)}
+.cheat dd{
+  font-family:"IBM Plex Mono",monospace; font-size:13.5px; font-weight:500;
+  text-align:right; font-variant-numeric:tabular-nums; color:var(--ink);
+}
+.cheat dt:nth-last-of-type(1), .cheat dd:nth-last-of-type(1){border-bottom:none}
+
+.closing{
+  margin-top:40px; padding:20px; background:var(--surface);
+  border:1px solid var(--rule); border-radius:10px;
+}
+.closing p:last-child{margin-bottom:0}
+
+@media (max-width:560px){
+  body{font-size:15.5px}
+  .fact{flex:1 1 100%; border-right:none; border-bottom:1px solid var(--rule)}
+  .fact:last-child{border-bottom:none}
+  .cheat dl{grid-template-columns:1fr}
+  .cheat dd{text-align:left; padding-top:0; padding-bottom:10px}
+  .cheat dt{border-bottom:none; padding-bottom:2px}
+  .qbody{padding-left:15px}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important; transition:none!important}}
+</style>
+</head>
+<body>
+<nav class="topbar">
+  <div class="topbar-in">
+    <div class="navscroll">
+      <a href="#story">Story</a>
+      <a href="#why">Why hybrid</a>
+      <a href="#pipeline">Pipeline</a>
+      <a href="#files">Files</a>
+      <a href="#math">Maths</a>
+      <a href="#eval">Evaluation</a>
+      <a href="#serving">Serving</a>
+      <a href="#weak">Weak spots</a>
+      <a href="#qa">Q&amp;A bank</a>
+      <a href="#cheat">Cheat card</a>
+    </div>
+    <button class="themebtn" id="themebtn" aria-label="Switch theme">◐</button>
+  </div>
+</nav>
+
+<div class="wrap">
+
+<header class="masthead">
+  <p class="kicker">Interview preparation · Hybrid&nbsp;RAG Search</p>
+  <h1>Hybrid RAG Defence Kit</h1>
+  <p class="standfirst">Everything in your electronics-catalogue search project, explained twice: once <strong>the way you'd tell a child</strong>, once <strong>the way you'd tell an interviewer</strong> — plus the questions that would catch you out, and what to actually say.</p>
+
+  <dl class="factstrip">
+    <div class="fact"><dt>Catalogue</dt><dd>100 products</dd></div>
+    <div class="fact"><dt>Retrievers</dt><dd>2 + 2 fusions</dd></div>
+    <div class="fact"><dt>Python modules</dt><dd>8 files</dd></div>
+    <div class="fact"><dt>Maths libraries</dt><dd>None — hand-built</dd></div>
+    <div class="fact"><dt>Deployed on</dt><dd>EC2 / Docker</dd></div>
+  </dl>
+</header>
+
+<!-- =================== 1. STORY =================== -->
+<section id="story">
+  <span class="h2num">01</span>
+  <h2>The whole thing, as a story</h2>
+
+  <div class="plain">
+    <span class="tag">In plain words</span>
+    <p>Imagine a shop with <strong>100 gadgets</strong> — laptops, phones, headphones, watches. You want to ask it a normal human question like <em>"which laptop is good and costs less than eighty thousand rupees?"</em></p>
+    <p>You hire <strong>two helpers</strong>. The first helper is a very fussy librarian: she only finds boxes whose label contains the <em>exact words</em> you said. The second helper is a dreamy friend: he doesn't care about exact words, he finds things that <em>feel</em> like what you meant — ask for "something for running" and he brings a fitness watch, even though nobody wrote the word "running" on it.</p>
+    <p>Both helpers are wrong sometimes. So you make them each line up their best guesses, and you <strong>merge the two lines into one</strong>. Anything both helpers liked floats to the top. That merged shortlist is the answer.</p>
+    <p>Finally you hand that shortlist to a <strong>very fast talkative robot</strong> and say: "Here are four gadgets. Only using these four, answer the person's question nicely." The robot writes the friendly reply. It is not allowed to invent gadgets — it may only talk about the four you gave it.</p>
+  </div>
+
+  <h3>The same story, in interview language</h3>
+  <p>This is a <strong>hybrid retrieval-augmented generation (RAG) system</strong> over a 100-item electronics catalogue. Every product is flattened into one text document. Two independent retrievers score that corpus against the query:</p>
+  <ul>
+    <li><strong>BM25</strong> — a lexical / sparse retriever, implemented from scratch. It matches literal terms and weights them by rarity and document length.</li>
+    <li><strong>Dense vector search</strong> — every document and the query become numeric vectors; documents are ranked by <strong>cosine similarity</strong> to the query vector.</li>
+  </ul>
+  <p>The two ranked lists are merged by a <strong>fusion layer</strong> offering two strategies: <strong>Reciprocal Rank Fusion (RRF)</strong>, which combines positions, and <strong>normalised score fusion</strong>, which combines scores after min–max scaling. The top-K merged results become the <strong>context</strong> in a prompt sent to <strong>Llama 3.3 70B via the Groq API</strong>, which writes a grounded answer. A separate evaluation harness scores all four retrieval strategies on <strong>Precision@K, Recall@K, MRR and NDCG@K</strong> against hand-labelled ground truth.</p>
+
+  <h3>Your 30-second opening answer</h3>
+  <div class="flag">
+    <span class="tag">Say this when they ask "tell me about your project"</span>
+    <p>"It's a product search engine that answers questions in natural language. The interesting part is that I didn't use a search library — I implemented BM25 and cosine-similarity vector search from scratch in NumPy, then fused their rankings with Reciprocal Rank Fusion. The fused top results get passed as context to Llama 3.3 on Groq, so the answer is grounded in real catalogue data rather than the model's memory. I also built an evaluation harness with hand-labelled ground truth so I could actually measure whether hybrid beat either retriever alone — and the honest answer is: at K=3 yes, at K=5 not really, and I can explain why."</p>
+  </div>
+  <p>That last clause is deliberate. Volunteering a limitation before you're asked converts a weakness into evidence of rigour.</p>
+</section>
+
+<!-- =================== 2. WHY =================== -->
+<section id="why">
+  <span class="h2num">02</span>
+  <h2>Why hybrid — the problem each half solves</h2>
+
+  <div class="plain">
+    <span class="tag">In plain words</span>
+    <p>The fussy librarian fails when you use <em>different words</em> than the label — you say "noise cancelling", the box says "ANC", she finds nothing. The dreamy friend fails when you need something <em>exact</em> — you say "Tensor G4 chip", and he brings you five phones that are merely <em>similar</em>, missing the one that literally says Tensor G4.</p>
+    <p>So: one is bad at meaning, the other is bad at precision. Use both.</p>
+  </div>
+
+  <h3>Where keyword-only search breaks</h3>
+  <p>This is the <strong>vocabulary mismatch problem</strong>. BM25 has no concept of synonymy: "laptop" and "notebook" are unrelated tokens. Query <em>"noise cancelling headphones"</em> against a document that says <em>"ANC"</em> and the lexical score is zero.</p>
+
+  <h3>Where semantic-only search breaks</h3>
+  <p>Embeddings compress meaning, and compression loses exact identifiers. Model numbers, SKUs, version strings and rare proper nouns get blurred toward their neighbours. Searching <em>"Tensor G4"</em> semantically will surface "flagship smartphone processors" in general — including Snapdragon ones. BM25 nails these because a rare exact token carries enormous IDF weight.</p>
+
+  <h3>The one-line justification</h3>
+  <div class="flag">
+    <span class="tag">Memorise this</span>
+    <p>"Lexical search has high precision on rare exact terms and fails on synonyms. Dense search generalises across vocabulary and fails on rare exact terms. Their failure modes are <strong>uncorrelated</strong>, which is exactly the condition under which fusing two rankings helps — if both systems failed on the same queries, fusing them would just average the failure."</p>
+  </div>
+  <p>The phrase <em>"uncorrelated failure modes"</em> is the sophisticated version of this answer. It is also the reason an interviewer can trap you — see <a href="#weak">Weak spots</a>.</p>
+</section>
+
+<!-- =================== 3. PIPELINE =================== -->
+<section id="pipeline">
+  <span class="h2num">03</span>
+  <h2>The pipeline, end to end</h2>
+  <p>One query flows left to right. The two retrievers run <em>independently and in parallel conceptually</em> — they never see each other's scores until the fusion step.</p>
+
+  <div class="dscroll">
+    <svg viewBox="0 0 900 330" role="img" aria-label="Pipeline: query splits into BM25 and vector search, merges at fusion, produces top-K, then LLM answer">
+      <defs>
+        <marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+          <path d="M0,1 L9,5 L0,9" fill="none" stroke="currentColor" stroke-width="1.6"/>
+        </marker>
+      </defs>
+      <g color="var(--rule2)">
+
+      <!-- query -->
+      <rect class="box" x="8" y="130" width="122" height="62" rx="7"/>
+      <text class="lbl" x="69" y="155" text-anchor="middle">User query</text>
+      <text class="sub" x="69" y="172" text-anchor="middle">"laptop under 80k"</text>
+
+      <!-- split arrows -->
+      <path class="arw" d="M132 150 C 158 150, 158 74, 184 74" marker-end="url(#ah)"/>
+      <path class="arw" d="M132 172 C 158 172, 158 248, 184 248" marker-end="url(#ah)"/>
+
+      <!-- bm25 -->
+      <rect class="box-lex" x="188" y="40" width="182" height="70" rx="7"/>
+      <text class="lbl" x="279" y="64" text-anchor="middle">BM25 — lexical</text>
+      <text class="sub" x="279" y="81" text-anchor="middle">tokenise · IDF · saturation</text>
+      <text class="sub" x="279" y="96" text-anchor="middle">ranks all 100 docs</text>
+
+      <!-- vector -->
+      <rect class="box-sem" x="188" y="214" width="182" height="70" rx="7"/>
+      <text class="lbl" x="279" y="238" text-anchor="middle">Vector — semantic</text>
+      <text class="sub" x="279" y="255" text-anchor="middle">embed · cosine similarity</text>
+      <text class="sub" x="279" y="270" text-anchor="middle">ranks all 100 docs</text>
+
+      <!-- merge arrows -->
+      <path class="arw" d="M372 74 C 400 74, 402 140, 428 140" marker-end="url(#ah)"/>
+      <path class="arw" d="M372 248 C 400 248, 402 182, 428 182" marker-end="url(#ah)"/>
+
+      <!-- fusion -->
+      <rect class="box-fuse" x="432" y="118" width="164" height="86" rx="7"/>
+      <text class="lbl" x="514" y="144" text-anchor="middle">Fusion</text>
+      <text class="sub" x="514" y="163" text-anchor="middle">RRF: 1/(k + rank)</text>
+      <text class="sub" x="514" y="178" text-anchor="middle">— or —</text>
+      <text class="sub" x="514" y="193" text-anchor="middle">α·norm + (1−α)·norm</text>
+
+      <path class="arw" d="M598 161 L 634 161" marker-end="url(#ah)"/>
+
+      <!-- topk -->
+      <rect class="box" x="638" y="118" width="110" height="86" rx="7"/>
+      <text class="lbl" x="693" y="150" text-anchor="middle">Top-K</text>
+      <text class="sub" x="693" y="168" text-anchor="middle">4 products</text>
+      <text class="sub" x="693" y="183" text-anchor="middle">= the context</text>
+
+      <path class="arw" d="M750 161 L 786 161" marker-end="url(#ah)"/>
+
+      <!-- llm -->
+      <rect class="box" x="790" y="106" width="102" height="110" rx="7"/>
+      <text class="lbl" x="841" y="138" text-anchor="middle">Groq</text>
+      <text class="lbl" x="841" y="155" text-anchor="middle">Llama 3.3</text>
+      <text class="sub" x="841" y="176" text-anchor="middle">system prompt</text>
+      <text class="sub" x="841" y="191" text-anchor="middle">+ context</text>
+      <text class="sub" x="841" y="206" text-anchor="middle">→ answer</text>
+
+      <!-- eval note -->
+      <text class="sub" x="514" y="238" text-anchor="middle">evaluation.py scores every path above against hand-labelled ground truth</text>
+      <path class="arw" d="M514 212 L 514 226" stroke-dasharray="3 3"/>
+      </g>
+    </svg>
+  </div>
+  <p class="fcap">Retrieval is the whole game. The LLM at the end can only be as good as the four rows handed to it.</p>
+
+  <h3>What a "document" actually is</h3>
+  <p>Before anything is searched, each product row is flattened into <strong>one string</strong> by <code>construct_document()</code>. This is the unit that gets indexed, embedded, ranked and eventually pasted into the prompt:</p>
+<pre><code>Product Name: TechNova Laptop Model 1 | Category: Laptop |
+Brand: TechNova | Price: INR 95,247 |
+Specifications: feature_1: Ryzen 7, ram: 8GB, storage: 256GB |
+Reviews: Good overall purchase with strong feature set.</code></pre>
+  <p>Note the design decision hiding here: <strong>the customer review is inside the indexed text</strong>. That is why a query like <em>"good battery life"</em> can retrieve anything at all — that phrase exists nowhere in the specs, only in review prose. Mention this if asked "why did you include reviews in the document?"</p>
+</section>
+
+<!-- =================== 4. FILES =================== -->
+<section id="files">
+  <span class="h2num">04</span>
+  <h2>File by file — what each one owns</h2>
+  <p>Eight Python modules, each with a single responsibility. For every file: what it does, and the exact thing an interviewer will poke at.</p>
+
+  <div class="mods">
+
+    <div class="mod">
+      <h4>data_store.py</h4>
+      <p class="role">Loading &amp; document construction</p>
+      <p>Loads the catalogue from JSON, falls back to CSV, and rebuilds the nested <code>specs</code> dictionary when reading CSV (because CSV is flat and JSON is not). <code>construct_document()</code> flattens each product into the single indexed string shown above.</p>
+      <p class="poke"><b>They'll ask:</b> "Why JSON first with a CSV fallback?" — JSON preserves the nested specs structure natively; the CSV path has to reconstruct it column by column, so it's the lossy option and therefore second.</p>
+    </div>
+
+    <div class="mod">
+      <h4>bm25.py</h4>
+      <p class="role">Lexical retriever — built from scratch</p>
+      <p>Tokenises (lowercase, strip punctuation, drop stop words, keep digits and ₹), builds per-document term frequencies plus a document-frequency map, precomputes IDF for all 310 vocabulary terms, then scores with the Okapi BM25 formula. Tunable <code>k1</code> and <code>b</code>.</p>
+      <p class="poke"><b>They'll ask:</b> "This scores every document on every query — what's the complexity?" — O(N × |Q|) per query, N = corpus size. Fine at 100 documents; at scale you need an <b>inverted index</b> so you only touch documents that contain a query term.</p>
+    </div>
+
+    <div class="mod">
+      <h4>embeddings_client.py</h4>
+      <p class="role">Text → vectors, with a three-step fallback chain</p>
+      <p>Tries, in order: a locally loaded <code>sentence-transformers</code> model → the Hugging Face Inference API (<code>all-MiniLM-L6-v2</code>, 384 dimensions) → a hand-built <strong>TF-IDF vectoriser</strong> that reuses the BM25 tokeniser and IDF table to produce L2-normalised sparse vectors. It also mean-pools token-level embeddings when the API returns a 3-D array instead of one vector per text.</p>
+      <p class="poke"><b>They'll ask:</b> "What actually runs in your deployment?" — Honest answer: <code>torch</code> and <code>sentence-transformers</code> are deliberately <b>not</b> in requirements (the EC2 box is small), so without a Hugging Face token it lands on the TF-IDF fallback. See <a href="#weak">Weak spots</a> — this is the single most important thing to be ready for.</p>
+    </div>
+
+    <div class="mod">
+      <h4>vector_search.py</h4>
+      <p class="role">Dense retrieval &amp; cosine similarity</p>
+      <p>Embeds the whole corpus once at startup into a NumPy matrix, embeds the query per search, and ranks by cosine similarity — dot product over the product of the two L2 norms, written out by hand rather than called from a library.</p>
+      <p class="poke"><b>They'll ask:</b> "You loop over documents one at a time — why not vectorise?" — Correct, and the file even contains the vectorised version in a comment. The loop was kept for readability; <code>doc_vectors @ query / (norms · q_norm)</code> is one matrix operation and is the version you'd ship.</p>
+    </div>
+
+    <div class="mod">
+      <h4>hybrid_search.py</h4>
+      <p class="role">The fusion layer — two strategies</p>
+      <p><code>search_rrf()</code> converts both score lists into <em>rank</em> lists over the full corpus and sums 1/(k + rank). <code>search_score_fusion()</code> min–max normalises both score lists to [0,1] and takes a weighted sum controlled by α. Both return per-document diagnostics (each retriever's rank or raw and normalised score) so the UI can show <em>why</em> a result ranked where it did.</p>
+      <p class="poke"><b>They'll ask:</b> "Why rank both lists over the entire corpus, not just the top-K?" — Because a document ranked 40th by BM25 and 2nd by vector search must still be reachable. If you fuse only truncated lists, documents missing from one list need an imputed rank, and the choice of imputation silently becomes a hyperparameter.</p>
+    </div>
+
+    <div class="mod">
+      <h4>groq_client.py</h4>
+      <p class="role">Grounded generation</p>
+      <p>Builds the system prompt: the retrieved documents are injected as numbered <code>Document [n]</code> blocks with their scores, followed by guidelines instructing the model to answer <em>only</em> from context, compare objectively, respect price constraints, admit insufficiency, and format in Markdown with ₹. Calls Groq's OpenAI-compatible chat-completions endpoint with <code>temperature=0.2</code> and <code>max_tokens=1024</code> using plain <code>requests</code>.</p>
+      <p class="poke"><b>They'll ask:</b> "How do you prevent hallucination?" — Three mechanisms: context grounding (the model only sees retrieved rows), an explicit instruction to state insufficiency rather than guess, and low temperature. None is a guarantee — say so, then say what you'd add: citation of <code>product_id</code> per claim, and a post-check that every ID in the answer exists in the context.</p>
+    </div>
+
+    <div class="mod">
+      <h4>evaluation.py</h4>
+      <p class="role">Measurement — the part most student projects skip</p>
+      <p>Holds <code>BENCHMARK_QUERIES</code>: six queries hand-mapped to their relevant product IDs. Implements Precision@K, Recall@K, Reciprocal Rank and NDCG@K from scratch, runs all four retrieval strategies over all six queries, and returns both a summary table and a per-query breakdown as pandas DataFrames.</p>
+      <p class="poke"><b>They'll ask:</b> "Who decided what's relevant?" — You did, by hand, for six queries. That is a <b>smoke test, not a benchmark</b>. Own it, then describe the fix: more queries, graded (not binary) relevance, and labels from someone other than the person tuning the system.</p>
+    </div>
+
+    <div class="mod">
+      <h4>app.py &nbsp;·&nbsp; api.py</h4>
+      <p class="role">Two front doors onto the same engine</p>
+      <p><code>app.py</code> is the Streamlit UI: a sidebar exposing every hyperparameter live (k₁, b, top-K, fusion method, RRF k, α, model), a three-column side-by-side comparison of BM25 vs vector vs hybrid results, an evaluation tab that recomputes the metric table and bar chart on demand, and a maths walkthrough tab with an interactive BM25 saturation-curve simulator. <code>api.py</code> is the FastAPI REST layer: <code>/api/v1/search</code>, <code>/api/v1/rag/chat</code>, <code>/api/v1/products</code>, <code>/api/v1/evaluate</code>, <code>/health</code>, with Pydantic request/response models and auto-generated Swagger docs.</p>
+      <p class="poke"><b>They'll ask:</b> "Where are the engines built?" — In FastAPI's <code>lifespan</code> context manager: the corpus is loaded, indexed and embedded <b>once at server startup</b> and held in a module-level dict, so requests never pay indexing cost. In Streamlit the same job is done by <code>@st.cache_resource</code>.</p>
+    </div>
+
+  </div>
+</section>
+
+<!-- =================== 5. MATHS =================== -->
+<section id="math">
+  <span class="h2num">05</span>
+  <h2>The maths, explained twice</h2>
+
+  <h3>BM25 — ranking by rare words, with diminishing returns</h3>
+  <div class="plain">
+    <span class="tag">In plain words</span>
+    <p>Three common-sense rules, written as arithmetic:</p>
+    <p><strong>1. Rare words matter more.</strong> If you search "Tensor G4" and only five boxes say it, that's a strong clue. If you search "the", every box says it, so it's worthless. That's <strong>IDF</strong>.</p>
+    <p><strong>2. Repetition helps, but less and less.</strong> A box saying "laptop" five times isn't five times better than one saying it once. After a few mentions, extra mentions barely count. That's <strong>saturation</strong>, controlled by k₁.</p>
+    <p><strong>3. Long labels get a discount.</strong> A very long label contains lots of words by accident, so a match there is less impressive. That's <strong>length normalisation</strong>, controlled by b.</p>
+  </div>
+
+  <div class="formula">
+    <span class="lhs">IDF(q) = ln</span>(1 +
+    <span class="frac"><span class="num">N − n(q) + 0.5</span><span class="den">n(q) + 0.5</span></span>)
+  </div>
+  <p class="fcap">N = 100 documents · n(q) = how many contain the term</p>
+
+  <div class="formula">
+    <span class="lhs">score(D,Q) = Σ<sub>q∈Q</sub> IDF(q) ·</span>
+    <span class="frac">
+      <span class="num">f(q,D) · (k₁ + 1)</span>
+      <span class="den">f(q,D) + k₁ · (1 − b + b · |D| / avgdl)</span>
+    </span>
+  </div>
+  <p class="fcap">k₁ = 1.5 · b = 0.75 · avgdl = 28 tokens in this corpus</p>
+
+  <h4>What the two knobs really do</h4>
+  <ul>
+    <li><strong>k₁ = 0</strong> → the fraction collapses to exactly 1, so term frequency is ignored entirely and BM25 degenerates into pure binary presence weighted by IDF. Good answer to "what's the edge case?"</li>
+    <li><strong>k₁ → ∞</strong> → saturation disappears and the weight grows almost linearly with frequency, i.e. it approaches classic TF-IDF behaviour.</li>
+    <li><strong>b = 0</strong> → document length is ignored completely.</li>
+    <li><strong>b = 1</strong> → full length normalisation; long documents are penalised hardest.</li>
+  </ul>
+
+  <p>The saturation curve is the visual that makes this land. The weight approaches a hard ceiling of <strong>k₁ + 1 = 2.5</strong> and never exceeds it, no matter how many times the term repeats:</p>
+
+  <div class="dscroll chartbox">
+    <svg viewBox="0 0 560 300" role="img" aria-label="BM25 term-frequency weight saturates toward 2.5 while linear TF keeps climbing">
+      <!-- grid -->
+      <line class="grid" x1="56" y1="30" x2="520" y2="30"/>
+      <line class="grid" x1="56" y1="103" x2="520" y2="103"/>
+      <line class="grid" x1="56" y1="177" x2="520" y2="177"/>
+      <!-- asymptote -->
+      <line x1="56" y1="67" x2="520" y2="67" stroke="var(--fuse)" stroke-width="1.2" stroke-dasharray="2 5"/>
+      <text class="tick" x="524" y="70" fill="var(--fuse)">k₁+1 = 2.5</text>
+      <!-- axes -->
+      <line class="axis" x1="56" y1="250" x2="520" y2="250"/>
+      <line class="axis" x1="56" y1="30" x2="56" y2="250"/>
+      <!-- y ticks -->
+      <text class="tick" x="48" y="254" text-anchor="end">0</text>
+      <text class="tick" x="48" y="181" text-anchor="end">1</text>
+      <text class="tick" x="48" y="107" text-anchor="end">2</text>
+      <text class="tick" x="48" y="34" text-anchor="end">3</text>
+      <!-- x ticks -->
+      <text class="tick" x="56" y="266" text-anchor="middle">0</text>
+      <text class="tick" x="211" y="266" text-anchor="middle">4</text>
+      <text class="tick" x="365" y="266" text-anchor="middle">8</text>
+      <text class="tick" x="520" y="266" text-anchor="middle">12</text>
+      <text class="tick" x="288" y="286" text-anchor="middle">term frequency in the document</text>
+      <!-- linear TF -->
+      <line class="curve-b" x1="56" y1="250" x2="520" y2="30"/>
+      <text class="tick" x="446" y="52" fill="var(--lex)">linear TF</text>
+      <!-- bm25 -->
+      <path class="curve-a" d="M56,250 L94.7,176.7 L133.3,145.3 L172,127.8 L210.7,116.7 L249.3,109.0 L288,103.3 L326.7,99.0 L365.3,95.6 L404,92.9 L442.7,90.6 L481.3,88.7 L520,87.1"/>
+      <text class="tick" x="380" y="122" fill="var(--sem)">BM25, k₁=1.5 b=0.75</text>
+    </svg>
+  </div>
+  <p class="fcap">Plotted at |D| = avgdl. The gap between the two lines <em>is</em> the difference between BM25 and TF-IDF.</p>
+
+  <h3>Embeddings and cosine similarity</h3>
+  <div class="plain">
+    <span class="tag">In plain words</span>
+    <p>Turn every sentence into an arrow in a room with hundreds of directions. Sentences that mean similar things point the same way. To compare two sentences you don't measure how <em>far apart</em> the arrow tips are — you measure the <strong>angle</strong> between the arrows. Same direction means same meaning, even if one arrow is longer.</p>
+  </div>
+
+  <div class="formula">
+    <span class="lhs">cos(A,B) =</span>
+    <span class="frac"><span class="num">A · B</span><span class="den">‖A‖ ‖B‖</span></span>
+  </div>
+  <p class="fcap">1 = identical direction · 0 = unrelated · −1 = opposite</p>
+
+  <p><strong>Why cosine and not Euclidean distance?</strong> Because magnitude in text embeddings mostly encodes length and term repetition, not meaning. A short product name and a long product description about the same item should be judged similar; Euclidean distance would separate them because one vector is longer. Cosine divides magnitude out and compares direction only. Note also: on L2-normalised vectors, ranking by cosine similarity and ranking by Euclidean distance are <em>equivalent</em> — the normalisation is what makes them agree.</p>
+
+  <p><strong>Ranges differ by backend, and this is worth knowing:</strong> the TF-IDF fallback produces vectors with no negative components, so cosine is bounded in [0, 1]. Real MiniLM embeddings have negative components, so cosine is bounded in [−1, 1]. The fusion layer's min–max normalisation is what makes the two backends interchangeable downstream.</p>
+
+  <h3>Reciprocal Rank Fusion</h3>
+  <div class="plain">
+    <span class="tag">In plain words</span>
+    <p>Both helpers hand you a numbered list. You ignore how confident they claim to be — you only look at <em>what position</em> each item got. Position 1 is worth a lot, position 2 slightly less, position 50 almost nothing. Add up each item's two position-scores. Whatever both helpers put near the top wins.</p>
+  </div>
+
+  <div class="formula">
+    <span class="lhs">RRF(d) =</span>
+    <span class="frac"><span class="num">1</span><span class="den">k + rank<sub>bm25</sub>(d)</span></span>
+    <span class="lhs">+</span>
+    <span class="frac"><span class="num">1</span><span class="den">k + rank<sub>vec</sub>(d)</span></span>
+  </div>
+  <p class="fcap">k = 60, the constant from the original Cormack et al. 2009 paper</p>
+
+  <p><strong>Why k = 60 and what does it do?</strong> k flattens the curve. Without it, rank 1 scores 1.0 and rank 2 scores 0.5 — a brutal 2× cliff that lets a single retriever's top hit dominate everything. With k = 60, rank 1 scores 1/61 and rank 2 scores 1/62: almost identical. The effect is that <strong>agreement across both retrievers matters more than being first in either one</strong>. Small k → trust the top result heavily. Large k → treat the whole ranked list as nearly flat and reward consensus.</p>
+
+  <p><strong>The real reason RRF is used in production:</strong> it needs no score calibration. BM25 scores are unbounded and corpus-dependent; cosine similarity is bounded. Adding them directly is meaningless — it's adding metres to kilograms. RRF throws away the units entirely and keeps only the ordering, which is the one thing both systems agree on the meaning of.</p>
+
+  <h3>Normalised score fusion — the alternative</h3>
+  <div class="formula">
+    <span class="lhs">fused(d) = α · norm(bm25<sub>d</sub>) + (1 − α) · norm(cos<sub>d</sub>)</span>
+  </div>
+  <p class="fcap">norm(x) = (x − min) / (max − min), computed across the whole corpus · α = 0.5 by default</p>
+  <p><strong>Trade-off to state out loud:</strong> RRF discards magnitude, so it can't tell a runaway best match from a marginal one — it only knows both were ranked first. Score fusion keeps that information, but it's fragile: min–max normalisation is recomputed per query, so an outlier document stretches the scale and squashes everything else. Use RRF as the robust default; use score fusion when you want to deliberately weight one retriever, which is exactly what α exposes.</p>
+</section>
+
+<!-- =================== 6. EVAL =================== -->
+<section id="eval">
+  <span class="h2num">06</span>
+  <h2>Evaluation — the four metrics and the real numbers</h2>
+
+  <div class="plain">
+    <span class="tag">In plain words</span>
+    <p>You wrote down, by hand, the "correct answers" for six questions. Then you asked all four search methods those six questions and marked their homework four different ways: <em>how much of what you brought me was right</em>, <em>how much of the right stuff did you find</em>, <em>how quickly did you get to your first right answer</em>, and <em>were the right ones near the top or buried at the bottom</em>.</p>
+  </div>
+
+  <h4>Precision@K — "how much of what you handed me was correct?"</h4>
+  <p>Relevant items in the top K, divided by K. Returns 4 laptops, 3 of them actually relevant, K=5 → 3/5 = 0.6. Punishes junk in the results.</p>
+
+  <h4>Recall@K — "how much of the correct stuff did you find?"</h4>
+  <p>Relevant items in the top K, divided by the total number of relevant items in the whole catalogue. Six laptops qualify, you found 3 → 0.5. Punishes missing things. Precision and recall pull against each other — that's why both are reported.</p>
+
+  <h4>MRR — "how fast did you get to your first correct answer?"</h4>
+  <p>1 ÷ (position of the first relevant result), averaged across queries. First result relevant → 1.0. First relevant at position 3 → 0.33. This is the metric that matters when users only look at the first result.</p>
+
+  <h4>NDCG@K — "were the good ones near the top?"</h4>
+  <p>The only one of the four that is <em>rank-aware across the whole list</em>. Each relevant hit contributes 1/log₂(rank + 1), so position 1 is worth far more than position 5, then the total is divided by the score of a perfect ordering. Precision@5 treats a result at position 1 and position 5 identically; NDCG does not. That distinction is the correct answer to "why did you bother with NDCG?"</p>
+
+  <h3>Your measured results</h3>
+  <p class="tnote">Measured with a plain <code>pip install -r requirements.txt</code>, so vector search was running the <strong>TF-IDF fallback</strong>, not MiniLM. Defaults: k₁ = 1.5, b = 0.75, RRF k = 60, α = 0.5.</p>
+
+  <h4>K = 3</h4>
+  <div class="tscroll">
+    <table>
+      <thead><tr><th>Method</th><th>Precision@3</th><th>Recall@3</th><th>MRR</th><th>NDCG@3</th></tr></thead>
+      <tbody>
+        <tr><td>BM25</td><td>0.667</td><td>0.403</td><td class="best">1.000</td><td>0.735</td></tr>
+        <tr><td>Vector (TF-IDF)</td><td>0.667</td><td>0.417</td><td>0.792</td><td>0.667</td></tr>
+        <tr><td>Hybrid — RRF</td><td class="best">0.778</td><td class="best">0.472</td><td>0.917</td><td class="best">0.784</td></tr>
+        <tr><td>Hybrid — score fusion</td><td>0.722</td><td>0.444</td><td>0.806</td><td>0.706</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h4>K = 5</h4>
+  <div class="tscroll">
+    <table>
+      <thead><tr><th>Method</th><th>Precision@5</th><th>Recall@5</th><th>MRR</th><th>NDCG@5</th></tr></thead>
+      <tbody>
+        <tr><td>BM25</td><td class="best">0.733</td><td>0.731</td><td class="best">1.000</td><td class="best">0.791</td></tr>
+        <tr><td>Vector (TF-IDF)</td><td class="best">0.733</td><td class="best">0.744</td><td>0.792</td><td>0.744</td></tr>
+        <tr><td>Hybrid — RRF</td><td class="best">0.733</td><td>0.731</td><td>0.917</td><td>0.782</td></tr>
+        <tr><td>Hybrid — score fusion</td><td class="best">0.733</td><td class="best">0.744</td><td>0.806</td><td>0.748</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>What these numbers actually say — read this carefully</h3>
+  <ul>
+    <li><strong>Hybrid RRF wins cleanly at K = 3</strong>, on Precision, Recall and NDCG. That is the headline result and it's a real one.</li>
+    <li><strong>At K = 5 the advantage evaporates.</strong> Everything ties on Precision, and BM25 takes NDCG. Explanation: with only ~4–6 relevant items per query in a 100-document corpus, a window of 5 is wide enough that every method sweeps up nearly the same set. Fusion changes <em>ordering</em>, and Precision@5 is order-blind. The gain is in ranking quality at tight cutoffs — which is exactly where it matters, since you only feed the LLM 4 documents.</li>
+    <li><strong>BM25's MRR is a perfect 1.000</strong> — its first result was relevant for all six queries. That is the strongest single number in the table and it belongs to the <em>simplest</em> method. Say this before they notice it.</li>
+    <li><strong>MRR is identical at K = 3 and K = 5.</strong> Not a copy-paste error — <code>reciprocal_rank()</code> is computed over the full retrieved list without a K cutoff, so it's independent of the evaluation window by construction. Knowing this about your own code is exactly the kind of detail that separates "I ran it" from "I built it".</li>
+  </ul>
+</section>
+
+<!-- =================== 7. SERVING =================== -->
+<section id="serving">
+  <span class="h2num">07</span>
+  <h2>How it's served and deployed</h2>
+
+  <div class="plain">
+    <span class="tag">In plain words</span>
+    <p>The same engine has two doors. One door is a webpage with sliders and buttons for humans. The other door is a plain data endpoint for other programs. Both doors are packed into shipping boxes so they run identically on your laptop and on a rented computer in Mumbai.</p>
+  </div>
+
+  <h3>The two front doors</h3>
+  <ul>
+    <li><strong>Streamlit (port 8501)</strong> — the human interface. Three tabs: search explorer with live side-by-side comparison, the evaluation harness with a metrics bar chart, and a maths walkthrough with an interactive saturation-curve simulator. Every hyperparameter is a sidebar control, so you can demonstrate the effect of k₁, b, α and RRF k live in the interview.</li>
+    <li><strong>FastAPI (port 8000)</strong> — the machine interface, with Pydantic schemas, enum-validated search modes, bounded numeric fields (<code>ge</code>/<code>le</code>) and auto-generated Swagger docs at <code>/docs</code>.</li>
+  </ul>
+
+  <h3>Why both exist — have this answer ready</h3>
+  <div class="flag">
+    <span class="tag">The honest version</span>
+    <p>"Streamlit is a demo surface — it couples UI and compute in one process and can't be consumed by anything other than a browser. FastAPI makes the retrieval engine a service: typed, documented, independently testable and callable by another system. Streamlit proves the idea to a human; FastAPI is the part that would actually go into a product."</p>
+  </div>
+
+  <h3>Docker and EC2</h3>
+  <p><strong>One Dockerfile, two services.</strong> <code>docker-compose.yml</code> builds a single image and launches it twice with different <code>command</code> overrides — <code>uvicorn</code> for the backend, <code>streamlit</code> for the frontend. That is why the Dockerfile uses <code>CMD</code> rather than <code>ENTRYPOINT</code>: <code>CMD</code> can be overridden by compose, <code>ENTRYPOINT</code> cannot. Good detail to volunteer.</p>
+  <p>Other deliberate choices: <code>python:3.11-slim</code> for a small image; <code>requirements.txt</code> copied and installed <em>before</em> the application code, so Docker's layer cache doesn't reinstall dependencies on every code change; healthchecks on both services; <code>restart: unless-stopped</code>; the frontend reaching the backend at <code>http://backend:8000</code> over compose's internal DNS while the browser is sent to the host's public IP on port 8000 — the two are not the same address, which is a subtle networking point worth mentioning.</p>
+  <p><strong>On EC2:</strong> Ubuntu 24.04 in <code>ap-south-1</code>, a 2 GB swapfile (the free-tier instance has ~1 GB RAM and the Docker build needs more), Docker installed from apt so it restarts on boot, security-group inbound rules for 22, 8501 and 8000. Keys are not on the server — they're pasted into the Streamlit sidebar at runtime.</p>
+  <p><strong>Why no <code>torch</code>:</strong> a deliberate constraint. Installing PyTorch plus sentence-transformers would add well over a gigabyte to the image and will not build on a 1 GB instance. That is why embeddings are an API call and why a pure-NumPy fallback exists at all. Framing this as a <em>constraint you designed around</em> rather than a corner you cut is the difference between a weak answer and a strong one.</p>
+</section>
+
+<!-- =================== 8. WEAK =================== -->
+<section id="weak">
+  <span class="h2num">08</span>
+  <h2>Weak spots — know them before they find them</h2>
+  <p>Every one of these is real and findable by reading your code. An interviewer who spots one you haven't mentioned scores a point; one you've already volunteered scores you a point. Go first.</p>
+
+  <div class="flag">
+    <span class="tag">Weakness 01 · the big one</span>
+    <p><strong>"Best laptop under ₹80k" does not actually filter by price — anywhere in retrieval.</strong></p>
+    <p>Trace it yourself. The tokeniser splits on punctuation, so <code>Price: INR 95,247</code> becomes the two tokens <code>95</code> and <code>247</code>. The query tokenises to <code>['best', 'laptop', '80k']</code> — <code>under</code> is dropped as a stop word, <code>best</code> appears in <b>0</b> documents (IDF 0), <code>80k</code> appears in <b>0</b> documents (IDF 0). The entire query reduces to the single term <code>laptop</code>. Run it and three documents tie at exactly 2.875, and the third-ranked one costs ₹110,062.</p>
+    <p><strong>What to say:</strong> "Retrieval has no numeric reasoning — BM25 matches tokens, and a price is not a token you can compare. Right now the price constraint is enforced downstream by the LLM prompt, which is the wrong layer: it's non-deterministic and it burns context on rows that should never have been retrieved. The correct design is a <b>metadata pre-filter</b>: parse the constraint out of the query, filter the candidate set by <code>price_inr &lt; 80000</code> in code, and run hybrid retrieval only over what survives. That's how production vector databases do it, and it's the first thing I'd fix."</p>
+  </div>
+
+  <div class="flag">
+    <span class="tag">Weakness 02</span>
+    <p><strong>The "semantic" half may not be semantic at all.</strong></p>
+    <p>Because <code>sentence-transformers</code> is intentionally absent and the Hugging Face call needs a token (and the older inference host used in the committed code no longer resolves), the system frequently lands on the TF-IDF fallback. TF-IDF is a <em>lexical</em> method. When that happens you are fusing two lexical signals, their failure modes are highly correlated, and the core premise of hybrid search is no longer satisfied.</p>
+    <p><strong>What to say:</strong> "That's exactly right, and it's why the published numbers are labelled as the TF-IDF configuration. The architecture is backend-agnostic — <code>EmbeddingClient</code> is the seam, and swapping in real MiniLM changes one class. But I should be clear: the measured results demonstrate that the <em>fusion mechanism</em> works, not that dense retrieval helps. Proving the second claim needs a re-run with real embeddings, and I'd expect the gap to widen on the synonym queries like the ANC one."</p>
+  </div>
+
+  <div class="flag">
+    <span class="tag">Weakness 03</span>
+    <p><strong>Six hand-labelled queries is not an evaluation set.</strong></p>
+    <p>No statistical power — one query flipping moves an average by 17 percentage points. Relevance is binary when it should be graded. And the person who labelled the data is the person tuning the system, which is textbook label bias.</p>
+    <p><strong>What to say:</strong> "It's a regression smoke test that catches whether I've broken retrieval, not a benchmark that proves one method is better. To make it a benchmark: 50+ queries, graded relevance (0–3 rather than yes/no), labels from someone who isn't me, and bootstrap confidence intervals so I can say whether a 0.05 gap is signal or noise."</p>
+  </div>
+
+  <div class="flag">
+    <span class="tag">Weakness 04</span>
+    <p><strong>Moving a BM25 slider re-embeds the entire corpus.</strong></p>
+    <p>In Streamlit, <code>init_retrieval_engines</code> is cached on <code>(k1, b)</code> — but the function builds the <em>vector</em> index too. So nudging k₁, which has nothing to do with embeddings, invalidates the cache and rebuilds all 100 document vectors. With a real embedding API that's 100 network calls, real latency and real cost, triggered by a slider.</p>
+    <p><strong>The fix:</strong> split the cache. The vector index depends on the corpus alone and should be cached on that; only the BM25 retriever depends on k₁ and b. Two cached functions instead of one.</p>
+  </div>
+
+  <div class="flag">
+    <span class="tag">Weakness 05</span>
+    <p><strong>The search endpoint rebuilds the index inside a request handler.</strong></p>
+    <p>In <code>api.py</code>, if a caller passes a <code>k1</code> or <code>b</code> different from the startup values, the handler constructs a brand-new <code>BM25Retriever</code> over the full corpus — re-tokenising and re-indexing every document, synchronously, inside the request. It's discarded afterwards, so the next identical request pays the cost again. At 100 documents it's milliseconds; at scale it's an availability problem, and an unauthenticated one.</p>
+    <p><strong>The fix:</strong> precompute a small set of parameter variants at startup, or cache retrievers keyed on (k1, b) with a bounded LRU, or move tuning out of the request path entirely.</p>
+  </div>
+
+  <div class="flag">
+    <span class="tag">Weakness 06 · the subtle one</span>
+    <p><strong>Document vectors and query vectors can come from different backends.</strong></p>
+    <p>The Streamlit app builds the vector index first, then assigns the Hugging Face token afterwards. If the index was built via the TF-IDF fallback (310-dimensional, sized to this corpus' vocabulary) and a later query succeeds against the API (384-dimensional MiniLM), the cosine computation takes a dot product between a 310-vector and a 384-vector — a shape error, not a wrong answer. The comparison is only meaningful when both sides come from the same encoder.</p>
+    <p><strong>What to say:</strong> "The token has to be supplied before the index is built, not after. The robust fix is to record which backend produced the index and refuse, or rebuild, when a query would be encoded by a different one — an embedding index is only valid against its own encoder, which is also why you re-index a whole corpus when you upgrade an embedding model in production."</p>
+  </div>
+
+  <div class="flag">
+    <span class="tag">Smaller things, worth knowing</span>
+    <p><code>allow_origins=["*"]</code> with <code>allow_credentials=True</code> is a permissive CORS policy fine for a demo and wrong for production. The <code>groq</code> package is listed in <code>requirements.txt</code> but never imported — the client is hand-written with <code>requests</code>. There are no automated tests; each module has an <code>if __name__ == "__main__"</code> smoke test instead. There is no reranking stage between retrieval and generation. And there's no chunking strategy because each product is short enough to be a single document — which is a legitimate decision, but be ready to describe how you'd chunk if these were 40-page manuals.</p>
+  </div>
+</section>
+
+<!-- =================== 9. Q&A =================== -->
+<section id="qa">
+  <span class="h2num">09</span>
+  <h2>The question bank</h2>
+  <div class="qhead">
+    <p style="margin:0">Fifty-three questions grouped by what they're testing. Items marked <span class="sharp">sharp</span> are the ones designed to expose a gap.</p>
+    <button class="expandall" id="expandall">Expand all</button>
+  </div>
+
+  <div class="qgroup">
+    <h3>Opening <span class="n">·  the story</span></h3>
+
+    <details class="qa"><summary>Tell me about this project.</summary><div class="qbody">
+      <p>Use the 30-second answer in section 01. Structure it as: <strong>what it does → what's unusual about it → what you measured → one honest limitation</strong>. Never open with the tech stack; open with the problem.</p>
+    </div></details>
+
+    <details class="qa"><summary>What is RAG, and why not just ask the LLM directly?</summary><div class="qbody">
+      <p>Retrieval-Augmented Generation: fetch relevant documents first, then ask the model to answer using only those documents. Three reasons it beats asking directly — the model has <strong>never seen your catalogue</strong> (it's private data that post-dates training), answers are <strong>grounded</strong> so hallucination drops sharply, and the catalogue can change without retraining anything. The cost is that answer quality is now capped by retrieval quality.</p>
+    </div></details>
+
+    <details class="qa"><summary>Why not just use a SQL query — <code>WHERE price &lt; 80000 ORDER BY rating</code>?</summary><div class="qbody">
+      <p>For that exact question, SQL is genuinely better — deterministic, indexed, exact. Say so; pretending otherwise looks naive. Retrieval earns its place on questions SQL can't express: <em>"headphones people say are comfortable on long flights"</em> has no column. The strongest real answer is <strong>both</strong>: SQL-style metadata filters narrow the candidate set, retrieval ranks what's left by unstructured relevance. That's the architecture I'd move to, and it's the same fix as weakness 01.</p>
+    </div></details>
+
+    <details class="qa"><summary>Walk me through exactly what happens when I type a query.</summary><div class="qbody">
+      <p>Query string → tokenised for BM25 and scored against all 100 documents → embedded and scored by cosine similarity against the precomputed vector matrix → both score lists converted to full-corpus rankings → fused by RRF or weighted normalised scores → top 4 selected → each formatted into a <code>Document [n]</code> block and injected into the system prompt → Groq chat-completions call at temperature 0.2 → Markdown answer rendered. The two retrievers never see each other's output before fusion.</p>
+    </div></details>
+
+    <details class="qa"><summary>Why build BM25 and cosine similarity yourself instead of using rank_bm25 / FAISS / LangChain?</summary><div class="qbody">
+      <p>"Because the point was to understand the ranking maths, not to assemble a pipeline. I can tell you what k₁ does to the saturation curve and why RRF uses 1/(k+rank) — which I wouldn't be able to if I'd imported it." Then immediately show you know the flip side: <strong>in production I'd use the library</strong>, because Lucene's BM25 is battle-tested and FAISS's HNSW is orders of magnitude faster than my NumPy loop. Hand-rolling is the right choice for learning and the wrong choice for shipping.</p>
+    </div></details>
+
+    <details class="qa"><summary>What was the hardest part?</summary><div class="qbody">
+      <p>Pick something real and technical. Strongest candidate: <strong>score incomparability</strong> — BM25 scores are unbounded and corpus-dependent, cosine is bounded, and discovering that you cannot simply add them is what forces you into either rank-based fusion or per-query normalisation. That's a genuine conceptual hurdle, not "setting up Docker".</p>
+    </div></details>
+  </div>
+
+  <div class="qgroup">
+    <h3>BM25 and lexical retrieval <span class="n">·  8 questions</span></h3>
+
+    <details class="qa"><summary>What is BM25 in one sentence?</summary><div class="qbody">
+      <p>A probabilistic ranking function that scores a document by summing, over the query terms it contains, each term's rarity (IDF) multiplied by a saturating, length-normalised measure of how often it appears.</p>
+    </div></details>
+
+    <details class="qa"><summary>How is BM25 different from TF-IDF?</summary><div class="qbody">
+      <p>Two changes. <strong>Saturation:</strong> TF-IDF's term-frequency contribution is linear — 100 occurrences count 100×. BM25's approaches a ceiling of k₁+1, so the 10th occurrence adds almost nothing. <strong>Length normalisation:</strong> BM25 divides by document length relative to the corpus average, tunable via b. TF-IDF has no principled way to do this. The practical effect is that BM25 resists keyword stuffing and doesn't unfairly favour long documents.</p>
+    </div></details>
+
+    <details class="qa"><summary>What do k₁ and b control, and what are the edge cases?</summary><div class="qbody">
+      <p>k₁ controls saturation speed, b controls length normalisation strength. Edges: <strong>k₁ = 0</strong> makes the whole TF fraction equal exactly 1, so frequency is ignored and BM25 becomes binary presence × IDF. <strong>k₁ → ∞</strong> removes saturation and approaches linear TF. <strong>b = 0</strong> ignores length entirely. <strong>b = 1</strong> applies full normalisation. Defaults 1.5 and 0.75 are the standard Okapi values and hold up across most corpora.</p>
+    </div></details>
+
+    <details class="qa"><summary>Why is there a +0.5 in the IDF formula?</summary><div class="qbody">
+      <p>Smoothing, from the probabilistic derivation. It prevents division by zero and keeps the estimate stable for terms appearing in very few or very many documents — the same role Laplace smoothing plays elsewhere.</p>
+    </div></details>
+
+    <details class="qa"><summary>Your IDF is <code>ln(1 + x)</code>, but the textbook BM25 IDF is <code>ln(x)</code>. Why the difference? <span class="sharp">sharp</span></summary><div class="qbody">
+      <p>Because the textbook form <strong>goes negative</strong> when a term appears in more than roughly half the corpus: (N − n + 0.5)/(n + 0.5) drops below 1 and its log is negative, so a document is <em>penalised</em> for containing a common word. Wrapping it as ln(1 + x) guarantees IDF ≥ 0 since x is always positive. It's a well-known variant, used by Lucene among others.</p>
+    </div></details>
+
+    <details class="qa"><summary>Why remove stop words, and what did you deliberately keep?</summary><div class="qbody">
+      <p>Stop words appear almost everywhere so their IDF is near zero — they add computation and noise without signal. The kept exceptions are the interesting part: pure digits and any token containing ₹ survive the filter, because product queries legitimately contain <code>16GB</code>, <code>4</code>, <code>₹80k</code>. Be ready to admit this filter is imperfect — see the next question.</p>
+    </div></details>
+
+    <details class="qa"><summary>Your stop-word list removes "under", "over" and "not". What does that cost you? <span class="sharp">sharp</span></summary><div class="qbody">
+      <p>Real meaning. <em>"laptop under 80k"</em> and <em>"laptop over 80k"</em> tokenise identically, so BM25 cannot distinguish them — and neither can a bag-of-words model generally, since it discards word order. Negation is the same class of failure: <em>"headphones without noise cancelling"</em> matches noise-cancelling headphones perfectly. The honest fix isn't a better stop list; it's <strong>parsing the constraint out of the query into a structured filter</strong> before retrieval runs.</p>
+    </div></details>
+
+    <details class="qa"><summary>What's the complexity of your BM25 search, and how would you scale it?</summary><div class="qbody">
+      <p>As written, O(N × |Q|): every query term is checked against every document, so cost grows linearly with corpus size. An <strong>inverted index</strong> flips this — map each term to a posting list of the documents containing it, and only score documents that appear in at least one posting list, which for a rare term is a handful rather than all N. Above that: skip lists, WAND / BlockMax-WAND for early termination, and in practice Lucene (Elasticsearch / OpenSearch), which implements all of it.</p>
+    </div></details>
+  </div>
+
+  <div class="qgroup">
+    <h3>Embeddings and dense retrieval <span class="n">·  8 questions</span></h3>
+
+    <details class="qa"><summary>What is an embedding, really?</summary><div class="qbody">
+      <p>A learned map from text to a fixed-length vector of floats, trained so that texts with similar meaning land close together in that space. "Fixed-length" is the key property — a 3-word query and a 200-word document both become 384 numbers, which is what makes them directly comparable.</p>
+    </div></details>
+
+    <details class="qa"><summary>Why cosine similarity rather than Euclidean distance?</summary><div class="qbody">
+      <p>Cosine measures angle and ignores magnitude. In text embeddings magnitude largely tracks length and repetition rather than meaning, so Euclidean distance would separate a short title from a long description of the very same product. Worth adding: <strong>on L2-normalised vectors the two rankings are equivalent</strong> — squared Euclidean distance becomes 2 − 2·cosine — so the real answer is that cosine normalises implicitly, which is what you want.</p>
+    </div></details>
+
+    <details class="qa"><summary>Why all-MiniLM-L6-v2, and what does 384 mean?</summary><div class="qbody">
+      <p>A 6-layer distilled sentence transformer — small, fast, and strong for its size on semantic-similarity tasks. 384 is the embedding dimensionality: every text becomes 384 floats. Bigger models (768, 1024, 1536) capture more nuance at higher latency, memory and cost. For 100 short product descriptions, 384 is comfortably enough.</p>
+    </div></details>
+
+    <details class="qa"><summary>What happens when the embedding API is unavailable?</summary><div class="qbody">
+      <p>A three-stage fallback: locally loaded sentence-transformers → Hugging Face Inference API → a hand-built TF-IDF vectoriser that reuses the BM25 tokeniser and IDF table to build L2-normalised sparse vectors. The system degrades instead of crashing. Say the next sentence before they do: <em>the third stage is lexical, so quality degrades meaningfully, not just slightly.</em></p>
+    </div></details>
+
+    <details class="qa"><summary>Your fallback is TF-IDF, which is lexical. So when it's active, is this system actually hybrid? <span class="sharp">sharp</span></summary><div class="qbody">
+      <p><strong>No — and this is the question to answer honestly.</strong> "When it falls back, I'm fusing two lexical signals with correlated failure modes, which is not hybrid retrieval in any meaningful sense. It preserves availability, not semantic capability. The published numbers are explicitly labelled as the TF-IDF configuration, so what they demonstrate is that the <em>fusion mechanism</em> works — not that dense retrieval helps. Proving the second claim requires a re-run with real embeddings." See weakness 02.</p>
+    </div></details>
+
+    <details class="qa"><summary>How would you scale vector search past a NumPy loop?</summary><div class="qbody">
+      <p>Three tiers. <strong>One:</strong> vectorise — replace the per-document loop with a single matrix–vector product; that alone is a large constant-factor win and the code comment already sketches it. <strong>Two:</strong> approximate nearest neighbours — FAISS or HNSW trade exactness for sub-linear search, which is essential past roughly a million vectors. <strong>Three:</strong> a managed vector database (pgvector, Qdrant, Weaviate) when you also need persistence, metadata filtering and horizontal scale.</p>
+    </div></details>
+
+    <details class="qa"><summary>You embed the query on every search. What does that cost, and would you cache it?</summary><div class="qbody">
+      <p>One network round-trip per search — typically the dominant latency in the retrieval path, and metered if the provider charges. Yes, cache: queries follow a heavy-tailed distribution and popular ones repeat constantly, so a simple LRU on the normalised query string removes most of the cost. Document embeddings are already computed once at startup, which is the more important half.</p>
+    </div></details>
+
+    <details class="qa"><summary>Why one embedding per product rather than chunking?</summary><div class="qbody">
+      <p>Because each product document is a couple of dozen tokens — well inside the model's context window and semantically coherent, so splitting it would only dilute the signal. Chunking exists to stop long documents averaging several unrelated topics into one blurred vector. Then show you know the general case: for long documents you'd chunk with overlap, embed each chunk, retrieve chunks, and either return the parent document or pass the chunk with surrounding context.</p>
+    </div></details>
+  </div>
+
+  <div class="qgroup">
+    <h3>Fusion <span class="n">·  6 questions</span></h3>
+
+    <details class="qa"><summary>Explain RRF, and why the reciprocal?</summary><div class="qbody">
+      <p>Each retriever contributes 1/(k + rank) for each document, and the contributions are summed. The reciprocal encodes diminishing importance down the list — the gap between rank 1 and rank 2 should matter far more than the gap between rank 40 and rank 41, and 1/rank has exactly that shape. Crucially it uses <strong>only positions</strong>, so incomparable score scales never have to be reconciled.</p>
+    </div></details>
+
+    <details class="qa"><summary>What does k = 60 do, and what if you changed it?</summary><div class="qbody">
+      <p>k flattens the curve and controls how much a top-1 result dominates. Without k, rank 1 scores 1.0 and rank 2 scores 0.5 — a 2× cliff. With k = 60 it's 1/61 versus 1/62, nearly identical, so <strong>agreement between retrievers outweighs being first in either</strong>. Small k → trust individual top hits; large k → reward consensus across the list. 60 comes from the original Cormack et al. 2009 paper and is the standard default; the slider in the app lets you demonstrate the effect live.</p>
+    </div></details>
+
+    <details class="qa"><summary>RRF versus weighted score fusion — when do you use each?</summary><div class="qbody">
+      <p><strong>RRF</strong> when the two systems' scores aren't comparable, or when you don't have labelled data to tune a weight — it's robust and parameter-light. <strong>Score fusion</strong> when you want to deliberately favour one retriever and you have an evaluation set to tune α against. The cost of RRF is that it discards magnitude: a document that was a runaway best match and one that barely won both look like "rank 1".</p>
+    </div></details>
+
+    <details class="qa"><summary>Why mi.n–max normalise before adding scores?</summary><div class="qbody">
+      <p>Because BM25 scores are unbounded and corpus- and query-dependent while cosine is bounded in [0,1] or [−1,1]. Adding them raw means a weighted sum whose effective weights drift query by query — you think α = 0.5 is an even split, but BM25 scores of 12 against cosine scores of 0.4 make it nothing of the sort. Min–max maps both onto a common [0,1] scale so α means what it claims to mean.</p>
+    </div></details>
+
+    <details class="qa"><summary>Your min–max is computed over the whole corpus per query. What would break if you normalised only over the top-K? <span class="sharp">sharp</span></summary><div class="qbody">
+      <p>The scale would depend on which documents happened to make the cut, so the best item in the window would always normalise to exactly 1.0 and the worst to 0.0 — regardless of whether the window contained one great match or ten mediocre ones. Fused scores would stop being comparable across queries, and α would silently change meaning per query. Normalising over the full corpus keeps a fixed reference frame. It's also why min–max is fragile in general: one outlier stretches the scale and compresses everything else, which is an argument for z-score normalisation or for RRF.</p>
+    </div></details>
+
+    <details class="qa"><summary>Your RRF assigns a rank to every document, so even irrelevant ones get a non-zero score. Is that a problem?</summary><div class="qbody">
+      <p>Not for correctness — every document scores something, but documents ranked low by both retrievers get tiny scores and never surface. It costs a full sort over the corpus per query, which is O(N log N) and irrelevant at N = 100 but wasteful at scale. The production pattern is to fuse truncated candidate lists (say top-100 from each) and treat absences as a large constant rank, accepting that the imputed rank becomes a tunable parameter.</p>
+    </div></details>
+  </div>
+
+  <div class="qgroup">
+    <h3>Evaluation <span class="n">·  7 questions</span></h3>
+
+    <details class="qa"><summary>Precision@K versus Recall@K — and why report both?</summary><div class="qbody">
+      <p>Precision = relevant ÷ K, "how clean were my results". Recall = relevant found ÷ total relevant, "how complete was I". They trade off: returning everything gives perfect recall and terrible precision. Reporting one alone lets you hide the other, which is why the harness computes both.</p>
+    </div></details>  
+
+    <details class="qa"><summary>What is MRR and what does 1.0 mean?</summary><div class="qbody">
+      <p>Mean Reciprocal Rank: 1 ÷ the position of the first relevant result, averaged over queries. 1.0 means the very first result was relevant for <strong>every</strong> query. In this project BM25 scores exactly that — a clean, genuine result, and one worth pointing out yourself since it belongs to the simplest method.</p>
+    </div></details>
+
+    <details class="qa"><summary>Why NDCG when you already have precision?</summary><div class="qbody">
+      <p>Precision@5 is order-blind — a relevant result at position 1 and at position 5 count identically. NDCG discounts by 1/log₂(rank+1), so earlier hits are worth more, then divides by the ideal ordering's score to bound the result in [0,1] and make it comparable across queries with different numbers of relevant items. It's the only metric here that grades the <em>ordering</em>, which is precisely what a fusion layer changes.</p>
+    </div></details>
+
+    <details class="qa"><summary>Why is your MRR identical at K = 3 and K = 5? <span class="sharp">sharp</span></summary><div class="qbody">
+      <p>Because <code>reciprocal_rank()</code> takes no K argument — it scans the full retrieved list (top-20) for the first relevant hit, so it is independent of the evaluation window by construction. It isn't a bug, but it does mean the column heading "MRR" alongside "Precision@K" is slightly misleading; strictly it's MRR@20. Knowing this about your own output is a strong signal.</p>
+    </div></details>
+
+    <details class="qa"><summary>Where did the ground truth come from? <span class="sharp">sharp</span></summary><div class="qbody">
+      <p>Hand-labelled by you, six queries, binary relevance. Say it plainly and immediately name the three problems: <strong>no statistical power</strong> (one query flipping moves an average by ~17 points), <strong>binary relevance</strong> where graded would be truer, and <strong>label bias</strong> because the labeller is also the person tuning the system. Then give the fix — 50+ queries, graded 0–3 relevance, independent labellers, bootstrap confidence intervals.</p>
+    </div></details>
+
+    <details class="qa"><summary>At K = 5, plain BM25 matches or beats your hybrid. So why ship hybrid? <span class="sharp">sharp</span></summary><div class="qbody">
+      <p>Don't dodge this. "At K = 5 everything ties on precision and BM25 takes NDCG. With 4–6 relevant items per query in a 100-document corpus, a window of 5 is wide enough that every method retrieves nearly the same set — fusion changes ordering, and precision at that width can't see ordering. The advantage shows at K = 3, where hybrid RRF wins on precision, recall and NDCG. That's the operating point that matters, because the LLM only receives 4 documents. And on this corpus both signals are lexical anyway, so this comparison understates what hybrid would do with real embeddings."</p>
+    </div></details>
+
+    <details class="qa"><summary>How would you evaluate the generated answer, not just retrieval?</summary><div class="qbody">
+      <p>Retrieval metrics say nothing about the final text. Three layers: <strong>groundedness / faithfulness</strong> — does every claim trace to a retrieved document (checkable programmatically here, since every product has an ID); <strong>answer relevance</strong> — does it address the question asked; and <strong>constraint compliance</strong> — for "under ₹80k", does every recommended product actually cost less than ₹80,000, which is a deterministic check you can automate today. Beyond that, LLM-as-judge with a rubric, calibrated against a small set of human ratings.</p>
+    </div></details>
+  </div>
+
+  <div class="qgroup">
+    <h3>Generation <span class="n">·  6 questions</span></h3>
+
+    <details class="qa"><summary>Why Groq, and why Llama 3.3 70B?</summary><div class="qbody">
+      <p>Groq runs inference on custom LPU hardware and is dramatically faster than typical GPU serving — which matters for an interactive demo where the retrieval step is already sub-second. It's also OpenAI-API-compatible, so it's one base URL away from swapping providers. Llama 3.3 70B is strong at instruction-following and structured comparison; the app also offers 8B-instant as a lower-latency option.</p>
+    </div></details>
+
+    <details class="qa"><summary>Why temperature 0.2?</summary><div class="qbody">
+      <p>Temperature scales the randomness of token sampling. This is a factual comparison task over supplied data — creativity is a defect, not a feature. Low temperature keeps the answer close to the context and makes it reproducible, which also makes it testable. Not 0.0 purely to avoid degenerate repetition; anything in that range is defensible.</p>
+    </div></details>
+
+    <details class="qa"><summary>How do you stop it hallucinating products that don't exist?</summary><div class="qbody">
+      <p>Three mechanisms, none sufficient alone: the model only sees retrieved rows (context grounding); the system prompt explicitly instructs it to state insufficiency rather than guess; temperature is low. Then volunteer the gap — none of these is a guarantee, and the verification I'd add is requiring a <code>product_id</code> citation per recommendation and programmatically rejecting any answer citing an ID that wasn't in the context.</p>
+    </div></details>
+
+    <details class="qa"><summary>Your prompt asks the LLM to filter by price. Why isn't that done in code? <span class="sharp">sharp</span></summary><div class="qbody">
+      <p>It should be. "That's the weakest design decision in the project. A price constraint is deterministic — <code>price_inr &lt; 80000</code> — and delegating it to a language model makes it probabilistic, unverifiable, and wasteful, because rows that fail the filter still consume context. The right architecture parses the constraint from the query and applies it as a pre-filter before retrieval, so the LLM only ever sees valid candidates and its job reduces to ranking and explaining."</p>
+    </div></details>
+
+    <details class="qa"><summary>What if the right product ranks 7th and you only pass the top 4?</summary><div class="qbody">
+      <p>Then the system cannot answer correctly, and no amount of prompt engineering fixes it — <strong>retrieval is a hard ceiling on RAG quality</strong>. That's the entire motivation for measuring Recall@K separately: it tells you how often the right answer was even reachable. Mitigations are retrieve-wide-then-rerank, or raising K and accepting the context cost.</p>
+    </div></details>
+
+    <details class="qa"><summary>How would you add a reranker?</summary><div class="qbody">
+      <p>Insert a third stage between fusion and generation. Retrieve broadly (say top 50 by hybrid), then score each (query, document) <em>pair jointly</em> with a cross-encoder — unlike the bi-encoder used for indexing, it sees both texts together and is far more accurate, at the cost of being far slower, which is why it only ever runs on a shortlist. Pass the reranked top 4 to the LLM. This retrieve-then-rerank pattern is standard in production RAG and is the single highest-value addition here.</p>
+    </div></details>
+  </div>
+
+  <div class="qgroup">
+    <h3>System design and deployment <span class="n">·  8 questions</span></h3>
+
+    <details class="qa"><summary>Walk me through the architecture.</summary><div class="qbody">
+      <p>Two containers from one image. FastAPI holds the retrieval engines in memory and exposes typed REST endpoints; Streamlit is the interactive surface and talks to the backend over compose's internal DNS at <code>http://backend:8000</code>. Both are built from the same Dockerfile with different <code>command</code> overrides. Deployed on a single EC2 instance behind security-group rules for ports 8501 and 8000.</p>
+    </div></details>
+
+    <details class="qa"><summary>What does <code>lifespan</code> do and why use it?</summary><div class="qbody">
+      <p>It's FastAPI's startup/shutdown hook — an async context manager where everything before <code>yield</code> runs once at boot and everything after runs at shutdown. The corpus is loaded, tokenised, indexed and embedded there, so the cost is paid once rather than per request, and the engines live in module state for every handler to reuse. It replaces the deprecated <code>@app.on_event("startup")</code> decorator.</p>
+    </div></details>
+
+    <details class="qa"><summary>Why Pydantic models instead of raw dicts?</summary><div class="qbody">
+      <p>Validation at the boundary and documentation for free. <code>SearchMode</code> is an enum so an invalid mode is rejected with a 422 before any handler code runs; numeric fields carry <code>ge</code>/<code>le</code> bounds so <code>top_k</code> can't be 10,000; response models guarantee shape. And FastAPI generates the OpenAPI schema and Swagger UI directly from them, so the docs can't drift from the code.</p>
+    </div></details>
+
+    <details class="qa"><summary>In <code>/api/v1/search</code>, passing a custom k₁ rebuilds the whole index inside the request. What's wrong with that? <span class="sharp">sharp</span></summary><div class="qbody">
+      <p>Everything. It re-tokenises and re-indexes all 100 documents synchronously in the request path, discards the result, and pays the cost again on the next identical call — unbounded work triggered by an unauthenticated request parameter, which is a denial-of-service shape. At this corpus size it's milliseconds; the pattern is what's wrong. Fix: precompute a small set of parameter variants at startup, or an LRU cache keyed on (k1, b), or take tuning out of the request path entirely.</p>
+    </div></details>
+
+    <details class="qa"><summary>Why one Dockerfile for two services?</summary><div class="qbody">
+      <p>Both processes need the same code, the same dependencies and the same dataset — the only difference is the entry command. One image means one build, one cache, and no chance of the two drifting apart. The Dockerfile uses <code>CMD</code> rather than <code>ENTRYPOINT</code> precisely so compose can override it per service.</p>
+    </div></details>
+
+    <details class="qa"><summary>Why copy <code>requirements.txt</code> before the rest of the code?</summary><div class="qbody">
+      <p>Docker layer caching. Layers invalidate from the first changed instruction downward, so if the code were copied first, every source edit would invalidate the <code>pip install</code> layer and reinstall everything. Copying only the requirements file first means dependencies are rebuilt only when that file actually changes — turning a multi-minute rebuild into seconds.</p>
+    </div></details>
+
+    <details class="qa"><summary>How are API keys handled, and what would you change?</summary><div class="qbody">
+      <p>Keys are read from environment variables, with compose passing through <code>GROQ_API_KEY</code> and <code>HF_API_TOKEN</code> from an optional <code>.env</code>; <code>.env</code> is gitignored, and the app also accepts a key pasted into the sidebar at runtime, which is what the deployed instance relies on. For production: a secrets manager (AWS Secrets Manager or SSM Parameter Store) with an instance role, never a file on disk and never a value typed into a UI. Also flag the CORS policy — <code>allow_origins=["*"]</code> with credentials enabled is demo-grade.</p>
+    </div></details>
+
+    <details class="qa"><summary>What breaks if a hundred users hit this simultaneously?</summary><div class="qbody">
+      <p>Several things, in order. The retrieval loop is pure Python and CPU-bound, so the GIL serialises it and a single uvicorn worker becomes the bottleneck. Every search makes a synchronous outbound call to embed the query, blocking the event loop — those handlers are <code>def</code>, not <code>async def</code>, so they run in a bounded threadpool that will saturate. State lives in a process-local dict, so you cannot simply add replicas without each one holding its own copy of the index. Fixes: vectorise the scoring, make the outbound calls async, cache query embeddings, then move the index into a shared vector store so replicas are stateless.</p>
+    </div></details>
+  </div>
+
+  <div class="qgroup">
+    <h3>"What would you do next?" <span class="n">·  4 questions</span></h3>
+
+    <details class="qa"><summary>If you had two more weeks, what would you fix first?</summary><div class="qbody">
+      <p>In order, with reasons: <strong>1.</strong> Metadata pre-filtering for price and category — it fixes the single largest correctness gap. <strong>2.</strong> Real MiniLM embeddings with a persisted index, so the "hybrid" claim is actually true. <strong>3.</strong> Expand the evaluation set to 50+ graded queries so improvements are measurable rather than anecdotal. <strong>4.</strong> A cross-encoder reranker. Note that 3 comes before 4 deliberately — you can't tell whether the reranker helped without it.</p>
+    </div></details>
+
+    <details class="qa"><summary>How would you add structured filters properly?</summary><div class="qbody">
+      <p>Two stages. First, extract constraints from the query — a small grammar or regex for prices and comparators handles most of it, or a cheap LLM call emitting structured JSON for the general case. Second, apply them as a hard pre-filter over the candidate set, then run hybrid retrieval only over survivors. Pre-filter rather than post-filter, because post-filtering top-K can leave you with fewer results than requested — a real and common pitfall worth naming.</p>
+    </div></details>
+
+    <details class="qa"><summary>How would this change at a million products?</summary><div class="qbody">
+      <p>Nearly everything. BM25 moves to an inverted index (Elasticsearch/OpenSearch). Vector search moves to ANN — HNSW via FAISS or a managed vector DB — because exact search over a million vectors per query is untenable. Embeddings get computed in a batch pipeline and persisted, not rebuilt at startup. Fusion runs over truncated candidate lists from each system rather than full-corpus rankings. And you add caching plus a reranker, because at that scale the candidate set is large and noisy.</p>
+    </div></details>
+
+    <details class="qa"><summary>How would you know in production whether it's working?</summary><div class="qbody">
+      <p>Offline metrics only get you to launch. In production: click-through rate on results, position of the clicked result, zero-result and zero-click rates, query reformulation rate (a strong negative signal — users rephrasing means the first attempt failed), and latency percentiles. Then A/B test hybrid against BM25 alone on live traffic, because that's the only way to find out whether the offline gain survives contact with real queries.</p>
+    </div></details>
+  </div>
+</section>
+
+<!-- =================== 10. CHEAT =================== -->
+<section id="cheat">
+  <span class="h2num">10</span>
+  <h2>Cheat card</h2>
+  <p>The numbers and names you should be able to produce without thinking. Read this last, on the way in.</p>
+
+  <div class="cheat">
+    <dl>
+      <dt>Corpus size (N)</dt><dd>100 products</dd>
+      <dt>Categories</dt><dd>8 × ~12–13 each</dd>
+      <dt>Average document length (avgdl)</dt><dd>28 tokens</dd>
+      <dt>Vocabulary after stop-word removal</dt><dd>310 terms</dd>
+      <dt>BM25 defaults</dt><dd>k₁ = 1.5, b = 0.75</dd>
+      <dt>BM25 weight ceiling</dt><dd>k₁ + 1 = 2.5</dd>
+      <dt>Embedding model / dimensions</dt><dd>all-MiniLM-L6-v2 / 384</dd>
+      <dt>TF-IDF fallback dimensions</dt><dd>310 (= vocabulary size)</dd>
+      <dt>RRF constant</dt><dd>k = 60 (Cormack 2009)</dd>
+      <dt>Score fusion weight</dt><dd>α = 0.5, BM25 side</dd>
+      <dt>LLM / temperature / max tokens</dt><dd>Llama 3.3 70B · 0.2 · 1024</dd>
+      <dt>Documents passed as context</dt><dd>top 4</dd>
+      <dt>Benchmark queries</dt><dd>6, hand-labelled, binary</dd>
+      <dt>Best result (K = 3)</dt><dd>Hybrid RRF, NDCG 0.784</dd>
+      <dt>BM25 MRR</dt><dd>1.000 — first hit always relevant</dd>
+      <dt>Ports</dt><dd>8501 Streamlit · 8000 FastAPI</dd>
+    </dl>
+  </div>
+
+  <div class="closing">
+    <p><strong>The one habit that will carry the interview:</strong> for every design decision, state the choice, then the trade-off you accepted, then what you'd do differently at scale. "I used RRF" is a fact. "I used RRF because BM25 and cosine scores aren't on comparable scales, which costs me magnitude information — and at scale I'd fuse truncated candidate lists instead of ranking the full corpus" is an engineer.</p>
+    <p>And when you genuinely don't know something: say "I don't know, here's how I'd find out." That answer has never once cost anyone a job.</p>
+  </div>
+</section>
+
+</div>
+
+<script>
+(function(){
+  var btn = document.getElementById('themebtn');
+  function current(){
+    var set = document.documentElement.getAttribute('data-theme');
+    if (set) return set;
+    return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+  }
+  btn.addEventListener('click', function(){
+    var next = current() === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', next);
+    try { localStorage.setItem('hrdk-theme', next); } catch(e) {}
+  });
+  try {
+    var saved = localStorage.getItem('hrdk-theme');
+    if (saved === 'dark' || saved === 'light') document.documentElement.setAttribute('data-theme', saved);
+  } catch(e) {}
+
+  var all = document.getElementById('expandall');
+  all.addEventListener('click', function(){
+    var items = document.querySelectorAll('details.qa');
+    var opening = all.textContent.trim() === 'Expand all';
+    items.forEach(function(d){ d.open = opening; });
+    all.textContent = opening ? 'Collapse all' : 'Expand all';
+  });
+})();
+</script>
+</body>
+</html>
