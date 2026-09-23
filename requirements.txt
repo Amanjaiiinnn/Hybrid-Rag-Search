@@ -1,8 +1,28 @@
-streamlit
-pandas
-numpy
-requests
-groq
-matplotlib
-fastapi
-uvicorn
+# Core application.
+#
+# Deliberately free of torch, so the Docker image stays small. The corrective-RAG
+# graph (crag_graph.py) and its offline test suite (test_crag.py) run on this set
+# alone -- they use API-based embeddings and stub LLMs, never a local model.
+#
+# For local dense retrieval, the FAISS ANN benchmark and cross-encoder reranking,
+# also install requirements-ml.txt.
+
+streamlit==1.58.0
+fastapi==0.136.1
+uvicorn==0.47.0
+pandas==3.0.3
+numpy==2.1.3
+requests==2.34.2
+matplotlib==3.10.9
+groq==0.37.1
+pydantic==2.13.4
+python-dotenv==1.2.2
+
+# LangChain / LangGraph: the BaseRetriever wrapper, the LCEL chain and the
+# corrective-RAG state graph.
+langchain-core==1.6.4
+langchain-groq==1.1.3
+langgraph==1.2.12
+
+# Offline tests: pytest test_crag.py  (no API key required)
+pytest>=8.0

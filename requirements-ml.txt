@@ -1,0 +1,17 @@
+# Local model stack -- only needed for the modules that run a model on this machine:
+#
+#   ann_index.py   FAISS Flat / HNSW / IVF indexes, local sentence-transformer
+#                  embeddings, and the recall-vs-latency benchmark at 100k vectors
+#   reranker.py    cross-encoder second-stage reranking
+#
+# Kept separate from requirements.txt because sentence-transformers pulls PyTorch
+# (~2 GB), which would otherwise land in the Docker image for no reason: the
+# container serves the Streamlit UI and FastAPI service, both of which embed
+# through an API rather than locally.
+#
+#   pip install -r requirements-ml.txt
+
+-r requirements.txt
+
+faiss-cpu==1.15.1
+sentence-transformers==6.1.0

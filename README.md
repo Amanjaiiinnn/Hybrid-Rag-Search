@@ -2,7 +2,9 @@
 
 A Retrieval-Augmented Generation (RAG) app built from scratch in Python. It searches a 100-product electronics catalog with a hand-written **BM25** retriever, a **vector search** engine and two **hybrid fusion** methods, answers shopping questions with **Llama 3 on Groq**, and measures every retriever with **Precision@K, Recall@K, MRR and NDCG@K**.
 
-The retrieval maths (tokenisation, BM25, cosine similarity, rank fusion, metrics) is implemented directly with Python and NumPy. It doesn't use a search library or vector database.
+The core retrieval maths (tokenisation, BM25, cosine similarity, rank fusion, metrics) is implemented directly with Python and NumPy, with no search library behind it — so every number the app reports can be traced back to code in this repo.
+
+On top of that baseline the project adds the production layer: a **FAISS** ANN index benchmarked against exact search, **cross-encoder reranking**, a **LangChain** retriever wrapping the hand-written engine, and a **corrective-RAG agent built with LangGraph** that grades its own retrieval and its own answers.
 
 The same engine is also available as a **FastAPI** REST API, and a **Docker Compose** setup runs the API and the app together, ready to deploy on a server such as **AWS EC2**.
 
@@ -13,6 +15,8 @@ The same engine is also available as a **FastAPI** REST API, and a **Docker Comp
 - [Features](#features)
 - [How It Works](#how-it-works)
 - [Evaluation Results](#evaluation-results)
+- [ANN Search, Reranking and Corrective RAG](#ann-search-reranking-and-corrective-rag)
+- [Tests](#tests)
 - [Tech Stack](#tech-stack)
 - [Project Structure](#project-structure)
 - [Getting Started](#getting-started)
@@ -37,6 +41,11 @@ The same engine is also available as a **FastAPI** REST API, and a **Docker Comp
 - **Interactive maths walkthrough** with sliders for BM25 saturation, 2-D cosine similarity, fusion and the metrics.
 - **REST API** (FastAPI) for search, grounded answers, catalog filtering and the benchmark, with Swagger docs.
 - **Docker Compose** setup that runs the API and the Streamlit app as two containers, with steps for deploying on AWS EC2.
+- **FAISS ANN indexes** (Flat, HNSW, IVF) with a recall-vs-latency benchmark measured against exact search at 100k vectors.
+- **Cross-encoder reranking** as a precise second stage over a cheap first-stage candidate set.
+- **LangChain integration**: the hand-written hybrid engine exposed as a `BaseRetriever`, with metadata filters and an LCEL chain.
+- **Corrective RAG (LangGraph)**: an LLM router, document relevance grading, query rewriting under a retry budget, a web-search fallback, and groundedness / answer-relevance judges that trigger regeneration.
+- **Offline test suite** covering every branch of the corrective-RAG graph with stub LLMs, so it runs in CI with no API key.
 
 ---
 
@@ -189,6 +198,102 @@ Because both signals are lexical in this setup, running with sentence-transforme
 
 ---
 
+## ANN Search, Reranking and Corrective RAG
+
+The modules above are the from-scratch baseline. These four add the layer a production
+system needs, each one measured against that baseline rather than assumed to be better.
+
+### FAISS ANN indexes (`ann_index.py`)
+
+Brute-force cosine similarity over a NumPy matrix is exact but scans every document, so it
+stops being viable long before a real corpus. `FaissVectorSearch` exposes the same
+`search` / `get_scores` interface as the hand-written engine, so it drops straight into
+`HybridSearchEngine`, backed by one of three indexes:
+
+| Index | What it does | Knob |
+|---|---|---|
+| `IndexFlatIP` | Exact brute-force search. The ground truth ANN recall is measured against. | — |
+| `IndexHNSWFlat` | Layered proximity graph. | `M`, `efConstruction`, `efSearch` |
+| `IndexIVFFlat` | k-means partitions the space; a query only scans the nearest cells. Needs training. | `nlist`, `nprobe` |
+
+Vectors are L2-normalised, so inner product equals cosine similarity.
+
+```bash
+python ann_index.py     # sanity-checks all three, then runs the benchmark
+```
+
+The benchmark reports recall@10 against exact search and per-query latency across
+`efSearch` and `nprobe` settings, on 100k vectors — the scale where the trade-off
+actually appears. It uses clustered synthetic vectors on purpose: real embeddings are
+clustered, and uniform random vectors make every ANN index look worse than it is.
+
+### Cross-encoder reranking (`reranker.py`)
+
+A bi-encoder embeds the query and each document separately, which is what makes them
+indexable — but it never lets the two texts interact. A cross-encoder reads the
+`(query, document)` pair through one transformer: far more precise, far too slow to run
+over a whole corpus. So: retrieve a wide candidate set cheaply, then rerank only those.
+
+`CrossEncoderReranker` keeps the first-stage score as `first_stage_score`, so the effect
+of reranking on any query stays visible.
+
+### LangChain retriever and LCEL chain (`lc_retriever.py`)
+
+`CatalogRetriever` is a `BaseRetriever` wrapping the hand-written hybrid engine, adding
+metadata filters (max price, category) and optional reranking, and returning LangChain
+`Document`s. The point is that the custom retrieval maths stays underneath — the
+framework is the interface, not the implementation.
+
+`build_rag_chain` composes it into an LCEL chain (retriever → prompt → ChatGroq → parser)
+which supports `.invoke`, `.batch` and `.stream`.
+
+### Corrective RAG (`crag_graph.py`)
+
+A LangGraph state machine that checks its own work instead of answering in one shot:
+
+- **Route** — an LLM router with structured Pydantic output picks a specialist agent
+  (`spec_lookup` or `compare_budget`), extracts metadata filters, and short-circuits
+  off-topic questions.
+- **Grade documents** — LLM-as-judge marks each retrieved product relevant or not.
+- **Rewrite and retry** — too few relevant documents rewrites the search query and loops
+  back to retrieval, under a bounded retry budget.
+- **Fallback** — once rewrites are exhausted, an optional Tavily web search fills in,
+  clearly labelled as outside the catalog.
+- **Grade generation** — groundedness and answer-relevance judges run on the answer;
+  an ungrounded answer is regenerated with a stricter prompt.
+- **Memory** — a checkpointer keeps per-thread history, so follow-up questions are
+  rewritten into standalone questions before retrieval.
+
+Every node appends to a `trace`, so the full decision path is inspectable per turn. The
+judges run on a small fast model (`llama-3.1-8b-instant`) while the generator runs on a
+larger one — judging is cheap, generating is not.
+
+```bash
+python crag_graph.py    # needs GROQ_API_KEY
+python eval_crag.py     # plain LCEL RAG vs corrective RAG, side by side
+```
+
+`eval_crag.py` runs both systems over the labelled benchmark queries plus deliberately
+vague and impossible ones ("cheap computer for college", "SSD under 3000 rupees"), and
+reports context precision, rewrite and regeneration counts, and the same judge's
+groundedness verdict on both answers.
+
+---
+
+## Tests
+
+```bash
+pytest
+```
+
+`test_crag.py` drives every branch of the corrective-RAG graph — the happy path, router
+filters, rewrite-then-recover, fallback after max rewrites, regeneration of an ungrounded
+answer, the off-topic short circuit, and per-thread checkpointer history — using a stub
+LLM and a fake retriever. No API key, no model download, no network. That is what makes
+the suite usable in CI.
+
+---
+
 ## Tech Stack
 
 | Area | Tools |
@@ -197,8 +302,13 @@ Because both signals are lexical in this setup, running with sentence-transforme
 | Retrieval maths | Python, NumPy |
 | Data | Pandas, JSON / CSV |
 | Embeddings | Hugging Face Inference API, optional sentence-transformers, TF-IDF fallback |
+| ANN search | FAISS (`IndexFlatIP`, `IndexHNSWFlat`, `IndexIVFFlat`) |
+| Reranking | sentence-transformers `CrossEncoder` (ms-marco-MiniLM-L-6-v2) |
 | LLM | Groq chat completions API (Llama 3.3 70B / Llama 3.1 8B) via `requests` |
+| Orchestration | LangChain (`BaseRetriever`, LCEL), LangGraph (corrective-RAG state graph, checkpointer) |
+| Structured output | Pydantic schemas for routing and the LLM judges |
 | API | FastAPI, Uvicorn, Pydantic |
+| Tests | pytest, offline stub LLM and fake retriever |
 | Deployment | Docker, Docker Compose, AWS EC2 |
 
 ---
@@ -216,13 +326,21 @@ Hybrid-Rag-Search/
 ├── groq_client.py                  # GroqClient: grounded answer generation
 ├── evaluation.py                   # Benchmark queries + Precision@K, Recall@K, MRR, NDCG@K
 ├── data_store.py                   # Catalog loading and document construction
+├── ann_index.py                    # FAISS Flat/HNSW/IVF + recall-vs-latency benchmark
+├── reranker.py                     # CrossEncoderReranker: precise second-stage reranking
+├── lc_retriever.py                 # LangChain BaseRetriever over the hybrid engine + LCEL chain
+├── crag_graph.py                   # Corrective-RAG state graph (LangGraph): route, grade, rewrite, judge
+├── eval_crag.py                    # Plain RAG vs corrective RAG on the benchmark
+├── test_crag.py                    # Offline tests for every graph branch (stub LLM, no API key)
+├── benchmark_retrieval.py          # Retrieval benchmark driver
 ├── electronics_catalog_100.json    # Product catalog (primary)
 ├── electronics_catalog_100.csv     # Same catalog as CSV (fallback)
 ├── Dockerfile                      # Python 3.11 image shared by both services
 ├── docker-compose.yml              # backend (FastAPI, port 8000) + frontend (Streamlit, port 8501)
 ├── .env.example                    # Optional keys for Docker Compose (copy to .env)
 ├── .dockerignore
-├── requirements.txt
+├── requirements.txt                # Core app + LangChain/LangGraph + pytest (no torch)
+├── requirements-ml.txt             # FAISS + sentence-transformers, for ann_index.py / reranker.py
 └── .gitignore
 ```
 
@@ -258,6 +376,16 @@ Install the dependencies:
 
 ```bash
 pip install -r requirements.txt
+```
+
+That covers the app, the REST API, the corrective-RAG graph and the test suite. It
+deliberately leaves out PyTorch, so the install (and the Docker image) stays small.
+
+`ann_index.py` and `reranker.py` run models locally and need the extra stack — FAISS and
+sentence-transformers, which pull in PyTorch (~2 GB):
+
+```bash
+pip install -r requirements-ml.txt
 ```
 
 ### Run
@@ -498,6 +626,17 @@ python vector_search.py     # vector search on the same sample
 python hybrid_search.py     # RRF and score fusion on the sample
 python data_store.py        # loads the catalog and prints one document
 python evaluation.py        # full benchmark on the catalog, K = 3
+```
+
+The production layer (see [ANN Search, Reranking and Corrective RAG](#ann-search-reranking-and-corrective-rag)):
+
+```bash
+python ann_index.py         # FAISS Flat/HNSW/IVF + recall-vs-latency benchmark   [requirements-ml.txt]
+python reranker.py          # cross-encoder reranking on a 3-document sample      [requirements-ml.txt]
+python lc_retriever.py      # LangChain retriever, metadata filters, LCEL chain
+python crag_graph.py        # corrective-RAG graph over three example turns       [needs GROQ_API_KEY]
+python eval_crag.py         # plain RAG vs corrective RAG                         [needs GROQ_API_KEY]
+pytest                      # offline graph tests, no API key
 ```
 
 ---

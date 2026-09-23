@@ -1,6 +1,7 @@
 # Python cache
 __pycache__/
 *.py[cod]
+.pytest_cache/
 
 # Secrets (copy .env.example to .env locally; never commit .env)
 .env
